@@ -1,0 +1,100 @@
+# .gitignore file tells Git which files to ignore when committing your project
+# to the Git repository. .gitignore is located in the root directory of your
+# repo. The .gitignore file itself is a plain text document.
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+
+# PyInstaller
+#
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Python virtual environments
+#
+# In our course, let "venv/" be the name of the virtual environment directory
+# created from inside the Linux operating system.
+#
+# Activating virtual env: `source venv/bin/activate`
+venv/
+.venv/
+
+# Environment files
+#
+# Python-dotenv makes the app load the configuration from a .env file when it is
+# present (e.g. in development environment)
+.env
+# Additional .env.{...} files
+.env.*
+# Do not ignore the example .env file
+!.env.example
+#
+# The environment variables for the MySQL container
+.env-mysql
+#
+# [Note] Make sure that the .env and .env-mysql environment files are created
+# and populated with values correct for your environment.
+#
+# [Caution] The .env and .env-mysql files contain passwords and other sensitive
+# information, so they should never be added to source control.
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Django stuff:
+*.log
+local_settings.py
+#db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Contains VS Code workspace settings as well as configurations.
+# Reference: https://code.visualstudio.com/docs/editor/workspaces.
+.vscode/
+#A file for auto-loading databases in VS Code using DevDb
+.devdbrc
+
+# Contains dictionary settings for CSpell (a code spell checker).
+cspell.json
+
+# PyCharm project-specific settings. It also contains user's local PyCharm configs
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839.
+.idea/
+
+# PyCharm plugins
+.codetogether.ignore
+
+# Mac OS generated files
+.DS_Store
+.DS_Store?
+
+# Windows OS generated files
+Thumbs.db
+
+# Node dependency directories
+node_modules/
+
+# Ignore these for now as well:
+.prettierrc
+.prettierignore
+package-lock.json
+package.json
+
+# Editor-agnostic configuration file for defining and maintaining consistent
+# coding styles between different editors and IDEs.
+.editorconfig

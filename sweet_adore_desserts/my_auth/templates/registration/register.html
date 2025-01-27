@@ -1,0 +1,73 @@
+{% extends "desserts/base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+  <div class="container" style="display: inline-block; width: 70%">
+    <h2>Sign up</h2>
+    <br />
+    <form method="post">
+      {% csrf_token %}
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="id_username">Username:</label>
+        <input
+          name="username"
+          type="text"
+          minlength="4"
+          class="form-control"
+          id="id_username"
+          aria-describedby="usernameHelp"
+          value="{{ form.username.value|default:'' }}"
+        />
+        {% if form.username.errors %}
+          <small class="text-danger">{{ form.username.errors.0 }}</small>
+        {% else %}
+          <small id="usernameHelp" class="form-text text-muted">Up to 150 characters.</small>
+        {% endif %}
+      </div>
+      <br />
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="id_email">Email:</label>
+        <input name="email" type="email" class="form-control" id="id_email" value="{{ form.email.value|default:'' }}" />
+        {% if form.email.errors %}
+          <small class="text-danger">{{ form.email.errors.0 }}</small>
+        {% else %}
+          <small id="emailHelp" class="form-text text-muted">
+            We will not share your email with anyone nor send you any spam. Your email is required to send you a new
+            password.
+          </small>
+        {% endif %}
+      </div>
+      <br />
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="id_password1">Password:</label>
+        <input name="password1" type="password" minlength="8" class="form-control" id="id_password1" />
+        {% if form.password1.errors %}
+          <small class="text-danger">{{ form.password1.errors.0 }}</small>
+        {% else %}
+          <small id="pwdHelp" class="form-text text-muted">
+            Minimum 8 characters, at least one letter and one number.
+          </small>
+        {% endif %}
+      </div>
+      <br />
+      <!-- Confirm Password Field -->
+      <div class="form-group">
+        <label for="id_password2">Confirm password:</label>
+        <input name="password2" type="password" minlength="8" class="form-control" id="id_password2" />
+        {% if form.password2.errors %}
+          <small class="text-danger">{{ form.password2.errors.0 }}</small>
+        {% endif %}
+      </div>
+      <br />
+      <button type="submit" class="btn btn-primary">Sign up</button>
+    </form>
+    <br />
+    <p>
+      If you already have an account, <a href="{% url 'login' %}"><strong>sign in.</strong></a>
+    </p>
+  </div>
+{% endblock content %}

@@ -1,0 +1,21 @@
+a {
+  text-decoration: none !important;
+}
+
+div.main-content {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+nav ul li {
+  margin-right: 10px;
+}
+
+footer {
+  color: #fff;
+  background-color: #333;
+  min-height: 100px;
+  align-content: center;
+  text-align: center;
+  font-style: italic;
+}

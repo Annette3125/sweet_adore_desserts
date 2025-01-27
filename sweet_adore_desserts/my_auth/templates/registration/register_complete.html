@@ -1,0 +1,10 @@
+{% extends "desserts/base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<h3>Success!</h3>
+<br>
+<h5>You can now<a href="{% url 'login' %}?next{% url 'index' %}"> Sign in</a></h5>
+
+{% endblock %}

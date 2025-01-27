@@ -1,0 +1,11 @@
+{% extends "desserts/base.html" %}
+
+{% block title %} {% endblock title %}
+
+{% block content %}
+<form action="{{ action_url }}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+{% endblock content %}
