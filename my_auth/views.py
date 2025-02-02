@@ -1,15 +1,13 @@
-import re
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
+from django.urls import reverse, reverse_lazy
+from django.views import generic
+from django.views.decorators.csrf import csrf_protect
 
 from .forms import UserCreationForm
-from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.http import HttpResponse
 
 
-# Create your views here.
+
 @csrf_protect
 def register(request):
     if request.method == "POST":
@@ -23,6 +21,11 @@ def register(request):
     return render(request, "registration/register.html", context={"form": form})
 
 
-
 def register_complete(request):
     return render(request, template_name="registration/register_complete.html")
+
+
+class SignUp(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'accounts/login.html'

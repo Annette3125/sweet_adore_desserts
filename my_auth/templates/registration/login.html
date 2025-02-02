@@ -1,35 +1,36 @@
 {% extends "desserts/base.html" %}
+d
+{% load crispy_forms_tags %}
+{% load static %}
 
 {% block title %}Sign in{% endblock %}
 
 {% block content %}
 
-  {% if form.errors %}
-    <p>Login error, please try again!</p>
-  {% endif %}
-  
-  {% if next %}
+{% comment %}
+  {% if request.GET.next %}
     {% if user.is_authenticated %}
       <p>You cannot access this content, please log in with a different user.</p>
     {% endif %}
   {% endif %}
-  
-  <form method="post" action="{% url 'login' %}">
+{% endcomment %}
+
+
+<body class="body_login">
+  <form method="post" class="form-signup">
     {% csrf_token %}
-    <table>
-      <tr>
-        <td>Username: </td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>Password: </td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="Login" />
-    <input type="hidden" name="next" value="{{ next }}" />
+    {{form|crispy}}
+    <button type="submit" class="save btn btn-dark">Sign up</button>
   </form>
-  
-  <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
-  
+</body>
 {% endblock content %}
+
+
+
+
+
+
+
+
+
+
