@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "desserts.apps.DessertsConfig",
     "tinymce",
     "django.contrib.admin",
+    "crispy_forms",
+    "crispy_bootstrap5",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -166,3 +168,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "menubar": True,
     "statusbar": True,
 }
+
+# Bootstrap5 template pack for django-crispy-forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
