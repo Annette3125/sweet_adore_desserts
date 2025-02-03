@@ -108,3 +108,65 @@ class Cocktail(models.Model):
 
     def __str__(self):
         return f"{self.cocktail_name}"
+
+# second try
+
+# class Cake(models.Model):
+#     by_occasion = models.CharField(max_length=200, blank=True, null=True)
+#     by_flavour = models.CharField(max_length=200, blank=True, null=True)
+#     by_design = models.CharField(max_length=200, blank=True, null=True)
+#
+#     def __str__(self):
+#         return f"{self.by_design} {self.by_flavour} {self.by_design}."
+#
+#     class Meta:
+#         verbose_name = "Cake"
+#         verbose_name_plural = "Cakes"
+#
+# class Dessert(models.Model):
+#     cake_name = models.CharField(max_length=200, blank=True, null=True)
+#     cake = models.ForeignKey(Cake, on_delete=models.CASCADE, blank=True, null=True)
+#     cookie = models.CharField(max_length=200, blank=True, null=True)
+#     cake_pops = models.CharField(max_length=200, blank=True, null=True)
+#     description = HTMLField("Description", max_length=4096, default="")
+#     price = models.FloatField(blank=False, null=False)
+#     quantity = models.FloatField(blank=False, null=False)
+#
+#     class Meta:
+#         verbose_name = "Dessert"
+#         verbose_name_plural = "Desserts"
+#
+#     def __str__(self):
+#         return (
+#             f"{self.cake} {self.cake} {self.price} €."
+#             f"{self.cookie} {self.price} €."
+#             f"{self.cake_pops} {self.price} €."
+#         )
+#
+#
+# class Order(models.Model):
+#     dessert = models.ForeignKey(
+#         Dessert, on_delete=models.CASCADE, null=True, blank=True, related_name="orders"
+#     )
+#     date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
+#     total_price = models.FloatField(blank=True, null=True, default=0)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+#     deadline = models.DateTimeField(verbose_name="Deadline", null=True, blank=True)
+#
+#     class Meta:
+#         verbose_name = "Order"
+#         verbose_name_plural = "Orders"
+#         ordering = ["-id"]
+#
+#
+# class Cocktail(models.Model):
+#     cocktail_name = models.CharField(max_length=200, blank=True, null=True)
+#     description = HTMLField("Description", max_length=4096, default="")
+#     recipe = HTMLField("Recipe", max_length=4096, default="")
+#
+#     class Meta:
+#         verbose_name = "Cocktail"
+#         verbose_name_plural = "Cocktails"
+#
+#     def __str__(self):
+#         return f"{self.cocktail_name}"
