@@ -4,97 +4,77 @@ from tinymce.models import HTMLField
 from my_auth.models import User
 
 
-class CakeByOccasion(models.Model):
-    by_occasion = models.CharField(max_length=200, blank=True, null=True)
-    description = HTMLField("Description", max_length=4096, default="")
-
-    def __str__(self):
-        return f"{self.by_occasion}"
-
-
-class CakeByFlavour(models.Model):
-    by_flavour = models.CharField(max_length=200, blank=True, null=True)
-    description = HTMLField("Description", max_length=4096, default="")
-
-    def __str__(self):
-        return f"{self.by_flavour}"
-
-
-class CakeByDesign(models.Model):
-    by_design = models.CharField(max_length=200, blank=True, null=True)
-    description = HTMLField("Description", max_length=4096, default="")
-
-    def __str__(self):
-        return f"{self.by_design}"
-
-
-class Cake(models.Model):
-    cake_by_occasion = models.ForeignKey(
-        CakeByOccasion, on_delete=models.CASCADE, blank=True, null=True
-    )
-    cake_by_flavour = models.ForeignKey(
-        CakeByFlavour, on_delete=models.CASCADE, blank=True, null=True
-    )
-    cake_by_design = models.ForeignKey(
-        CakeByDesign, on_delete=models.CASCADE, blank=True, null=True
-    )
-    description = HTMLField("Description", max_length=4096, default="")
-    price = models.FloatField(blank=False, null=False)
-    quantity = models.IntegerField(blank=True, null=False, default=1)
+class Option(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
-        verbose_name = "Cake"
-        verbose_name_plural = "Cakes"
+        verbose_name = "Option"
+        verbose_name_plural = "Options"
 
     def __str__(self):
-        return f"{self.cake_by_occasion} {self.cake_by_flavour} {self.cake_by_design} {self.price}"
+        return f"{self.name}"
 
-
-class Cookie(models.Model):
-    cookie = models.CharField(max_length=200, blank=True, null=False)
-    description = HTMLField("Description", max_length=4096, default="")
-    price = models.FloatField(blank=False, null=False)
-    quantity = models.IntegerField(blank=True, null=False, default=1)
+class Category(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
-        verbose_name = "Cookie"
-        verbose_name_plural = "Cookies"
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
 
     def __str__(self):
-        return f"{self.cookie} {self.price}"
+        return f"{self.name}"
 
-
-class CakePop(models.Model):
-    cake_pops = models.CharField(max_length=200, blank=True, null=False)
+class Product(models.Model):
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+    )
+    name = models.CharField(max_length=200, blank=True, null=True)
     description = HTMLField("Description", max_length=4096, default="")
     price = models.FloatField(blank=False, null=False)
-    quantity = models.IntegerField(blank=True, null=False, default=1)
 
     class Meta:
-        verbose_name_plural = "Cake Pops"
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
 
     def __str__(self):
-        return f"{self.cake_pops} {self.price}"
+        return f"{self.name} {self.price} {self.category}"
 
 
 class Order(models.Model):
-    cake = models.ForeignKey(
-        Cake, on_delete=models.CASCADE, max_length=200, blank=True, null=True
-    )
-    cookie = models.ForeignKey(
-        Cookie, on_delete=models.CASCADE, max_length=200, blank=True, null=True
-    )
-    cake_pops = models.ForeignKey(
-        CakePop, on_delete=models.CASCADE, max_length=200, blank=True, null=True
-    )
-    date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
+    order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     total_price = models.FloatField(blank=True, null=True, default=0)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     deadline = models.DateTimeField(verbose_name="Deadline", null=True, blank=True)
-
+    product = models.ForeignKey(
+        Category, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+    )
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
+
+    def __str__(self):
+        return f"{self.product} {self.order_date} {self.user}"
+
+class OrderLine(models.Model):
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+    )
+    options = models.ForeignKey(
+        Option, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+    )
+    product = models.ForeignKey(
+        Category, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+    )
+    quantity = models.IntegerField(blank=True, null=False, default=1)
+
+    class Meta:
+        verbose_name = "Order Line"
+        verbose_name_plural = "Order Lines"
+
+
+    def __str__(self):
+        return f"({self.options}, {self.order} qty: {self.quantity}), {self.product}"
 
 
 class Cocktail(models.Model):
@@ -109,64 +89,3 @@ class Cocktail(models.Model):
     def __str__(self):
         return f"{self.cocktail_name}"
 
-# second try
-
-# class Cake(models.Model):
-#     by_occasion = models.CharField(max_length=200, blank=True, null=True)
-#     by_flavour = models.CharField(max_length=200, blank=True, null=True)
-#     by_design = models.CharField(max_length=200, blank=True, null=True)
-#
-#     def __str__(self):
-#         return f"{self.by_design} {self.by_flavour} {self.by_design}."
-#
-#     class Meta:
-#         verbose_name = "Cake"
-#         verbose_name_plural = "Cakes"
-#
-# class Dessert(models.Model):
-#     cake_name = models.CharField(max_length=200, blank=True, null=True)
-#     cake = models.ForeignKey(Cake, on_delete=models.CASCADE, blank=True, null=True)
-#     cookie = models.CharField(max_length=200, blank=True, null=True)
-#     cake_pops = models.CharField(max_length=200, blank=True, null=True)
-#     description = HTMLField("Description", max_length=4096, default="")
-#     price = models.FloatField(blank=False, null=False)
-#     quantity = models.FloatField(blank=False, null=False)
-#
-#     class Meta:
-#         verbose_name = "Dessert"
-#         verbose_name_plural = "Desserts"
-#
-#     def __str__(self):
-#         return (
-#             f"{self.cake} {self.cake} {self.price} €."
-#             f"{self.cookie} {self.price} €."
-#             f"{self.cake_pops} {self.price} €."
-#         )
-#
-#
-# class Order(models.Model):
-#     dessert = models.ForeignKey(
-#         Dessert, on_delete=models.CASCADE, null=True, blank=True, related_name="orders"
-#     )
-#     date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
-#     total_price = models.FloatField(blank=True, null=True, default=0)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-#     deadline = models.DateTimeField(verbose_name="Deadline", null=True, blank=True)
-#
-#     class Meta:
-#         verbose_name = "Order"
-#         verbose_name_plural = "Orders"
-#         ordering = ["-id"]
-#
-#
-# class Cocktail(models.Model):
-#     cocktail_name = models.CharField(max_length=200, blank=True, null=True)
-#     description = HTMLField("Description", max_length=4096, default="")
-#     recipe = HTMLField("Recipe", max_length=4096, default="")
-#
-#     class Meta:
-#         verbose_name = "Cocktail"
-#         verbose_name_plural = "Cocktails"
-#
-#     def __str__(self):
-#         return f"{self.cocktail_name}"
