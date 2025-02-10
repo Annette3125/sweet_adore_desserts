@@ -7,13 +7,16 @@
   <h1><i><strong>Sweet Adore Desserts</strong></i></h1>
    <br>
    <h5><i>Delicious <strong>inspiring</strong> collection!</i> </h5>
-   <p>Currently, we have:</p>
+   <p>Currently, You can order from these desserts:</p>
    <ul>
-    <li><strong>Cakes: </strong><a href="#">{{ num_cars }}</a></li>
-    <li><strong>Cookies: </strong><a href="#">{{ num_services }}</a></li>
-    <li><strong>Cake Pops: </strong><a href="#">{{ num_orders }}</a></li>
-    <li><strong>Cocktails: </strong><a href="#">{{ num_orders }}</a></li>
-  </ul>
+    <li><strong>Cakes: </strong><a href="#">{{ num_cakes }}</a></li>
+    <li><strong>Cookies: </strong><a href="#">{{ num_cookies }}</a></li>
+    <li><strong>Cake Pops: </strong><a href="#">{{ num_cake_pops }}</a></li>
+    </ul>
+     <p>Find great new drinks to try!</p>
+<ul>
+    <li><strong>Cocktails: </strong><a href="#">{{ num_cocktails_recipes }}</a></li>
+   </ul>
   <div class="container" style="display: inline-block; width: 75%">{{ bar_chart|safe }}</div>
 <p>Number of your visits {{ num_visits }}.</p>
 {% endblock content %}
