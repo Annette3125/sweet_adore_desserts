@@ -42,13 +42,28 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    product = models.ForeignKey(
+        Category, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+    )
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     total_price = models.FloatField(blank=True, null=True, default=0)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     deadline = models.DateTimeField(verbose_name="Deadline", null=True, blank=True)
-    product = models.ForeignKey(
-        Category, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+
+    NEW = "N"
+    IN_PROGRESS = "P"
+    COMPLETED = "C"
+    DELIVERED = "D"
+    ORDER_STATUSES = {
+        NEW: "New",
+        IN_PROGRESS: "In Progress",
+        COMPLETED: "Completed",
+        DELIVERED: "Delivered"
+    }
+    status = models.CharField(
+        max_length=1, choices=ORDER_STATUSES, default="NEW", blank=True
     )
+
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
@@ -57,9 +72,7 @@ class Order(models.Model):
         return f"{self.product} {self.order_date} {self.user}"
 
 class OrderLine(models.Model):
-    order = models.ForeignKey(
-        Order, on_delete=models.CASCADE, max_length=200, blank=True, null=True
-    )
+
     options = models.ForeignKey(
         Option, on_delete=models.CASCADE, max_length=200, blank=True, null=True
     )
@@ -74,7 +87,7 @@ class OrderLine(models.Model):
 
 
     def __str__(self):
-        return f"({self.options}, {self.order} qty: {self.quantity}), {self.product}"
+        return f"({self.options}, {self.product} qty: {self.quantity})"
 
 
 class Cocktail(models.Model):
