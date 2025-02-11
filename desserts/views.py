@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse
@@ -21,5 +21,16 @@ def index(request):
     return render(request, "desserts/index.html", context=context)
 
 
-def cakes(request):
-    return render(request, "dessert/cakes.html")
+def create_order(request):
+    if request.method == "POST":
+        form = OrderLineForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("create_order"))
+    else:
+        form = OrderLineForm()
+    context = {"form": form, "action_url": reverse("create_order")}
+
+    return render(request, "desserts/generic_form.html", context)
+
+
