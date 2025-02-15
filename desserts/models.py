@@ -27,7 +27,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+        Category, on_delete=models.CASCADE, blank=True, null=True
     )
     name = models.CharField(max_length=200, blank=True, null=True)
     description = HTMLField("Description", max_length=4096, default="")
@@ -42,9 +42,6 @@ class Product(models.Model):
 
 
 class Order(models.Model):
-    product = models.ForeignKey(
-        Category, on_delete=models.CASCADE, max_length=200, blank=True, null=True
-    )
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     total_price = models.FloatField(blank=True, null=True, default=0)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -69,15 +66,16 @@ class Order(models.Model):
         verbose_name_plural = "Orders"
 
     def __str__(self):
-        return f"{self.product} {self.order_date} {self.user}"
+        return f" {self.order_date} {self.user}"
 
 class OrderLine(models.Model):
-
-    options = models.ForeignKey(
-        Option, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, blank=True, null=True
     )
+    options = models.ManyToManyField(
+        Option, blank=False)
     product = models.ForeignKey(
-        Category, on_delete=models.CASCADE, max_length=200, blank=True, null=True
+        Category, on_delete=models.CASCADE, blank=True, null=True
     )
     quantity = models.IntegerField(blank=True, null=False, default=1)
 
@@ -87,7 +85,7 @@ class OrderLine(models.Model):
 
 
     def __str__(self):
-        return f"({self.options}, {self.product} qty: {self.quantity})"
+        return f"({self.options}, {self.product} {self.order} qty: {self.quantity})"
 
 
 class Cocktail(models.Model):
