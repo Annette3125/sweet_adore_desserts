@@ -1,0 +1,16 @@
+{% extends "desserts/base.html" %}
+
+{% load static %}
+{% block title %}Cakes{% endblock %}
+
+{% block content %}
+
+<h2>Cakes</h2>
+  <h5></h5>
+<ul>
+      {% for cake in cakes %}
+    <li><a href="{% url 'cake_details' cake.id %}">{{ cake.name }} </a></li>
+          {% endfor %}
+        </ul>
+{% endblock content %}
+

@@ -1,0 +1,14 @@
+{% extends "desserts/base.html" %}
+{% load static %}
+
+{% block title %}Cake Details{% endblock %}
+
+{% block content %}
+
+  <h2>{{ option.name }}</h2>
+  <hr />
+  <p><strong>Cake</strong>{{ product.name }}</p>
+  <p><strong>Description</strong>{{ product.description|safe }}</p>
+  <p><strong>Price </strong>{{ product.price }}</p>
+
+{% endblock content %}
