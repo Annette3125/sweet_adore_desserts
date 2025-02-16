@@ -27,7 +27,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, blank=True, null=True
+        Category, on_delete=models.CASCADE, blank=True, null=True, related_name="categories"
     )
     name = models.CharField(max_length=200, blank=True, null=True)
     description = HTMLField("Description", max_length=4096, default="")

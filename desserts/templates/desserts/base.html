@@ -20,7 +20,7 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="light">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="#b69e8b">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'index' %}">
           <img src="{% static 'desserts/img/desserts_logo.png' %}" alt="Sweet Adore Desserts Logo" width="50" height="50" />
@@ -55,8 +55,14 @@
 
              {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'create_order' %}">My orders</a>
+                <a class="nav-link" href="#">My orders</a>
               </li>
+
+          <li class="nav-item">
+                <a class="nav-link" href="{% url 'create_order' %}">Create Order</a>
+              </li>
+
+
               <li class="nav-item">
                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
                   {% csrf_token %}

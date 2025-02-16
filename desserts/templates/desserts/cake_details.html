@@ -5,10 +5,10 @@
 
 {% block content %}
 
-  <h2>{{ option.name }}</h2>
+  <h2>{{ cake.name }}</h2>
   <hr />
-  <p><strong>Cake</strong>{{ product.name }}</p>
-  <p><strong>Description</strong>{{ product.description|safe }}</p>
-  <p><strong>Price </strong>{{ product.price }}</p>
+  <li><strong>Cake </strong>{{ cake.name }}</li>
+  <li><strong>Description </strong>{{ cake.description|safe }}</li>
+  <li><strong>Price </strong>{{ cake.price }}</li>
 
 {% endblock content %}
