@@ -9,4 +9,5 @@ urlpatterns = [
     path("cakes/<int:pk>", views.cake_details, name="cake_details"),
     path("cookies/", views.CookiesListView.as_view(), name="cookies"),
     path("cookies/<int:pk>", views.CookiesDetailView.as_view(), name="cookies_details"),
+    path("orders/", views.OrdersListView.as_view(), name="orders"),
 ]

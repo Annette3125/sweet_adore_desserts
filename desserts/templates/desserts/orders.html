@@ -1,0 +1,26 @@
+{% extends "desserts/base.html" %}
+
+{% load static %}
+{% block title %}Cakes{% endblock %}
+
+{% block content %}
+
+<h2>Orders</h2>
+  <h5></h5>
+<br />
+<ul>
+      {% for order in orders %}
+
+      <li>{{ order.order_date }}</li>
+      <li>{{ order.total_price }}</li>
+      <li>{{ order.user }}</li>
+      <li>{{ order.deadline }}</li>
+    <hr />
+    <p><strong>Order Status </strong><a href="{% url 'orders' %}">{{ num_orders }}</a></p>
+       <li>{{ order.status }}</li>
+    <hr />
+   {% endfor %}
+        </ul>
+
+{% endblock content %}
+

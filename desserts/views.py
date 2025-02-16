@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.urls import reverse
 from .forms import OrderLineForm
-from .models import Option, Product, Cocktail, Category
+from .models import Option, Product, Cocktail, Order
 
 
 def index(request):
@@ -56,3 +56,12 @@ class CookiesDetailView(generic.DetailView):
     template_name = "desserts/cookies_details.html"
     model = Product
     context_object_name = "cookies"
+
+
+class OrdersListView(generic.ListView):
+    template_name = "desserts/orders.html"
+    model = Order
+    context_object_name = "orders"
+
+
+
