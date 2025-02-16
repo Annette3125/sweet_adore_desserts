@@ -21,9 +21,9 @@ nav ul li {
 }
 
 footer {
-  color: #fff;
-  background-color: #333;
-  min-height: 100px;
+  color: #b69e8b;
+  background-color: #dbc6b6;
+  min-height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
