@@ -1,0 +1,14 @@
+{% extends "desserts/base.html" %}
+{% load static %}
+
+{% block title %}Cookies Details{% endblock %}
+
+{% block content %}
+
+  <h2>{{ cookies.name }}</h2>
+  <hr />
+  <p><strong>Cookies </strong>{{ cookies.name }}</p>
+  <p><strong>Description</strong>{{ cookies.description|safe }}</p>
+  <p><strong>Price </strong>{{ cookies.price }}</p>
+
+{% endblock content %}

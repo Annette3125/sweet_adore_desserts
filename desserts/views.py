@@ -42,3 +42,17 @@ def cakes(request):
 def cake_details(request, pk):
     cake_ = get_object_or_404(Option, pk=pk)
     return render(request, "desserts/cake_details.html", {"cake": cake_})
+
+
+class CookiesListView(generic.ListView):
+    template_name = "desserts/cookies.html"
+    model = Product
+    context_object_name = "cookies"
+    #
+    # def get_queryset(self):
+    #     return Product.objects.filter(category__name="cookies")
+
+class CookiesDetailView(generic.DetailView):
+    template_name = "desserts/cookies_details.html"
+    model = Product
+    context_object_name = "cookies"

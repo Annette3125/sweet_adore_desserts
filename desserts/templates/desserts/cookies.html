@@ -1,0 +1,22 @@
+{% extends "desserts/base.html" %}
+
+{% load static %}
+{% block title %}Cookies{% endblock %}
+
+{% block content %}
+
+    {% if cookies %}
+    <h2>Cookies</h2>
+
+      <h5>The perfect Cookies that instantly delights your mood!</h5>
+    <ul>
+          {% for cookie in cookies %}
+    <li><a href="{% url 'cookies_details' cookie.id %}">{{ cookie.name }} </a></li>
+              {% endfor %}
+    </ul>
+            {% else %}
+    <h2>There are no cookies at the moment.</h2>
+            {% endif %}
+
+            {% endblock content %}
+
