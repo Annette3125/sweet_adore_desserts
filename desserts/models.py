@@ -64,17 +64,27 @@ class Order(models.Model):
         verbose_name = "Order"
         verbose_name_plural = "Orders"
 
+    @property
+    def total_price(self):
+        total_price = 0
+        for line in self.lines.all():
+            total_price += line.price
+        return total_price
+
+    def get_total_price_display(self):
+        return str(self.total_price)
+
     def __str__(self):
-        return f" {self.order_date} {self.user}"
+        return f" {self.order_date} {self.user} {self.total_price} € {self.deadline}"
 
 class OrderLine(models.Model):
     order = models.ForeignKey(
-        Order, on_delete=models.CASCADE, blank=True, null=True
+        Order, on_delete=models.CASCADE, blank=True, null=True, related_name="lines"
     )
     options = models.ManyToManyField(
         Option, blank=False)
     product = models.ForeignKey(
-        Category, on_delete=models.CASCADE, blank=True, null=True
+        Product, on_delete=models.CASCADE, blank=True, null=True
     )
     quantity = models.IntegerField(blank=True, null=False, default=1)
 
@@ -82,6 +92,14 @@ class OrderLine(models.Model):
         verbose_name = "Order Line"
         verbose_name_plural = "Order Lines"
 
+
+
+    @property
+    def price(self):
+        return self.product.price * self.quantity
+
+    def get_price_display(self):
+        return str(self.price)
 
     def __str__(self):
         return f"({self.options}, {self.product} {self.order} qty: {self.quantity})"
