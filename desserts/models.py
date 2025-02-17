@@ -27,7 +27,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, blank=True, null=True, related_name="categories"
+        Category, on_delete=models.CASCADE, blank=True, null=True
     )
     name = models.CharField(max_length=200, blank=True, null=True)
     description = HTMLField("Description", max_length=4096, default="")
@@ -38,12 +38,11 @@ class Product(models.Model):
         verbose_name_plural = "Products"
 
     def __str__(self):
-        return f"{self.name} {self.price} {self.category}"
+        return f"{self.name} {self.price} € {self.category}"
 
 
 class Order(models.Model):
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
-    total_price = models.FloatField(blank=True, null=True, default=0)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     deadline = models.DateTimeField(verbose_name="Deadline", null=True, blank=True)
 
