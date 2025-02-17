@@ -11,8 +11,8 @@ class OrderLineInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ["id"]
     inlines = [OrderLineInline]
-    list_display = ["order_date", "total_price", "user", "deadline", "status"]
-    list_editable = ["total_price", "deadline", "status"]
+    list_display = ["order_date","total_price", "user", "deadline", "status"]
+    list_editable = ["deadline", "status"]
 
 class OptionAdmin(admin.ModelAdmin):
     list_display = ["name"]
