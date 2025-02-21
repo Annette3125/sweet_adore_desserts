@@ -7,17 +7,16 @@
 
   <h2><strong>Order details: </strong></h2>
   <hr />
+ <ul>
   <li><strong>Order </strong>{{ order.order_date }}</li>
   <li><strong>User </strong>{{ order.user }}</li>
   <li><strong>Price </strong>{{ order.total_price }} €</li>
-
-<p><strong>Total price: </strong>{{ order.total_price }} </p>
-
-
+ </ul>
+{% if order.lines.all %}
 <div class="container" style="padding-top: 20px; padding-left: 20px">
   <h4></h4>
-{% if order.lines.all %}
-      <div class="container" style="display: inline-block; padding-top: 20px; padding-left: 20px; width: 80%">
+
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -30,16 +29,26 @@
         </thead>
           <tbody>
             {% for line in order.lines.all %}
-              <tr>
+  <tr>
                 <td>{{ line.product.name }}</td>
                 <td>{{ line.product.price }} €</td>
                 <td>{{ line.quantity }}</td>
-                <td>{{ line.options }}</td>
+<td>
 
-                    <td>
+    {% for option in line.options.all %}
+    {{ option.name }}
+  {% if not forloop.last %}
+  {% endif %}
     {% endfor %}
-    {% endif %}
-
-
+</td>
+  </tr>
+          {% endfor %}
+   </tbody>
+    </table>
+    <h4>Total: <strong>{{ order.total_price }} €</strong></h4>
+  </div>
+{% else %}
+  <p>No items in this order.</p>
+{% endif %}
 
 {% endblock content %}
