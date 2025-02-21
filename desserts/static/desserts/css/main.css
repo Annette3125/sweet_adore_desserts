@@ -10,6 +10,86 @@ a {
   text-decoration: none !important;
 }
 
+
+
+.cards-container {
+  display: flex;
+  gap: 20px; /* Tarpas tarp kortelių */
+  flex-wrap: wrap; /* Kortelės persikelia į kitą eilutę, jei netelpa */
+  justify-content: center; /* Centruoja korteles lange */
+}
+
+.card {
+    border: 4px solid #B69E8B; /* Rėmelio storis, stilius ir spalva */
+    border-radius: 10px; /* Užapvalinti kampai (jei nori) */
+}
+
+
+
+
+.heart {
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+  transform: rotate(-45deg);
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+
+/* Vidutinė širdelė (15px) */
+.heart.medium {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+}
+
+.heart.medium::before,
+.heart.medium::after {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+}
+
+.heart.medium::before {
+  top: -7.5px;
+  left: 0;
+}
+
+.heart.medium::after {
+  top: 0;
+  left: 7.5px;
+}
+
+/* Tiny heart (10px) */
+.heart.small {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+}
+
+.heart.small::before,
+.heart.small::after {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+}
+
+.heart.small::before {
+  top: -5px;
+  left: 0;
+}
+
+.heart.small::after {
+  top: 0;
+  left: 5px;
+}
+
 div.main-content {
   margin-top: 4rem;
   margin-bottom: 4rem;
@@ -23,9 +103,13 @@ nav ul li {
 footer {
   color: #b69e8b;
   background-color: #dbc6b6;
-  min-height: 80px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-style: italic;
 }
+
+
+
+

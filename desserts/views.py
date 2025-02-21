@@ -49,9 +49,9 @@ class CookiesListView(generic.ListView):
     template_name = "desserts/cookies.html"
     model = Product
     context_object_name = "cookies"
-    #
-    # def get_queryset(self):
-    #     return Product.objects.filter(category__name="cookies")
+
+    def get_queryset(self):
+        return Product.objects.filter(category__name="Cookies")
 
 class CookiesDetailView(generic.DetailView):
     template_name = "desserts/cookies_details.html"
