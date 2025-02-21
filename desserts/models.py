@@ -75,7 +75,7 @@ class Order(models.Model):
         return str(self.total_price)
 
     def __str__(self):
-        return f" {self.order_date} {self.user} {self.total_price} € {self.deadline}"
+        return f" Order date: {self.order_date} {self.user} {self.total_price} €, Return date: {self.deadline}"
 
 class OrderLine(models.Model):
     order = models.ForeignKey(
