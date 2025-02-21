@@ -6,19 +6,31 @@
 {% block content %}
 
 <h2>Orders</h2>
-  <h5></h5>
-<br />
-<ul>
-      {% for order in orders %}
+  <h5>Yours order:</h5>
+  <br />
+   {% if orders %}
+<div class="cards-container">
+   {% for order in orders %}
 
-      <li>{{ order.order_date }}</li>
-      <li>{{ order.total_price }}</li>
-      <li>{{ order.user }}</li>
-      <li>{{ order.deadline }}</li>
-    <hr />
-    <p><strong>Order Status </strong><a href="{% url 'orders' %}">{{ num_orders }}</a></p>
-       <li>{{ order.status }}</li>
-    <hr />
+  <div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Your order</h5>
+    <p class="card-text">Here you see the first date when ordered, your email, deadline of the order and total price. </p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{ order.order_date|date:"Y-m-d, H:i" }}</li>
+    <li class="list-group-item">{{ order.user }}</li>
+    <li class="list-group-item">{{ order.deadline|date:"Y-m-d, H:i" }}</li>
+    <li class="list-group-item">{{ order.total_price }} €</li>
+    <li class="list-group-item">Order Status: {{ order.status }} </li>
+    </ul>
+  <div class="card-body">
+    <a href="{% url 'order_details' order.id %}" class="card-link">Order details</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+    <br>
    {% endfor %}
         </ul>
 
