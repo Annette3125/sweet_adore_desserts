@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 from django.views import generic
 from django.urls import reverse
 from .forms import OrderLineForm
@@ -60,6 +61,7 @@ class CookiesDetailView(generic.DetailView):
 
 class OrdersListView(generic.ListView):
     template_name = "desserts/orders.html"
+    paginate_by = 4
     model = Order
     context_object_name = "orders"
 
