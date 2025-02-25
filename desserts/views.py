@@ -2,8 +2,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.views import generic
-from django.urls import reverse
-from .forms import OrderLineForm
+from django.views.generic.edit import FormView
+from django.urls import reverse,reverse_lazy
+from .forms import OrderLineForm, OrderForm
 from .models import Option, Product, Cocktail, Order
 
 
@@ -24,15 +25,30 @@ def index(request):
 
 def create_order(request):
     if request.method == "POST":
-        form = OrderLineForm(request.POST)
+        form = OrderForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse("create_order"))
     else:
-        form = OrderLineForm()
+        form = OrderForm()
     context = {"form": form, "action_url": reverse("create_order")}
 
     return render(request, "desserts/generic_form.html", context)
+
+
+def create_order_line(request):
+    if request.method == "POST":
+        form = OrderLineForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("create_order_line"))
+    else:
+        form = OrderLineForm()
+    context = {"form": form, "action_url": reverse("create_order_line")}
+
+    return render(request, "desserts/generic_form.html", context)
+
+
 
 
 def cakes(request):
@@ -78,6 +94,7 @@ class OrdersListView(generic.ListView):
     paginate_by = 4
     model = Order
     context_object_name = "orders"
+    ordering = ["id"]
 
 
 class OrderDetailView(generic.DetailView):

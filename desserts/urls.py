@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("create_order", views.create_order, name="create_order"),
+    path("create_order_line", views.create_order_line, name="create_order_line"),
     path("cakes/", views.cakes, name="cakes"),
     path("cakes/<int:pk>", views.cake_details, name="cake_details"),
     path("cookies/", views.CookiesListView.as_view(), name="cookies"),
