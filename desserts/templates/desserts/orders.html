@@ -7,7 +7,7 @@
 <h2>Orders</h2>
   <h5>Yours order:</h5>
   <br />
-   {% if orders %}
+   {% if page_obj %}
 <div class="cards-container">
    {% for order in page_obj %}
 
@@ -43,6 +43,7 @@
 {% endfor %}
 
 <div class="pagination">
+    <div class="pagination pagination-sm justify-content-center">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -59,6 +60,7 @@
         {% endif %}
     </span>
 </div>
-
+</div>
+    </div>
   {% endblock content %}
 
