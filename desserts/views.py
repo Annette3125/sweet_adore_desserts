@@ -11,7 +11,7 @@ def index(request):
 
     num_cakes = Option.objects.all().count
     num_cookies = Product.objects.filter(category__name="Cookies").count()
-    num_cake_pops = Product.objects.filter(category__name="Cake_Pops").count()
+    num_cake_pops = Product.objects.filter(category__name="Cake Pops").count()
     num_cocktails_recipes = Cocktail.objects.all().count
     context = {"num_cakes": num_cakes,
                "num_cookies": num_cookies,
@@ -59,6 +59,20 @@ class CookiesDetailView(generic.DetailView):
     context_object_name = "cookies"
 
 
+class CakePopsListView(generic.ListView):
+    template_name = "desserts/cake_pops.html"
+    model = Product
+    context_object_name = "cake_pops"
+
+    def get_queryset(self):
+        return Product.objects.filter(category__name="Cake Pops")
+
+class CakePopsDetailView(generic.DetailView):
+    template_name = "desserts/cake_pops_details.html"
+    model = Product
+    context_object_name = "cake_pops"
+
+
 class OrdersListView(generic.ListView):
     template_name = "desserts/orders.html"
     paginate_by = 4
@@ -70,6 +84,8 @@ class OrderDetailView(generic.DetailView):
     model = Order
     template_name = "desserts/order_details.html"
     context_object_name = "order"
+
+
 
 
 

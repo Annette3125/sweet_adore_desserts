@@ -11,4 +11,9 @@ urlpatterns = [
     path("cookies/<int:pk>", views.CookiesDetailView.as_view(), name="cookies_details"),
     path("orders/", views.OrdersListView.as_view(), name="orders"),
     path("orders/<int:pk>", views.OrderDetailView.as_view(), name="order_details"),
+    path("cake_pops/", views.CakePopsListView.as_view(), name="cake_pops"),
+    path("cake_pops/<int:pk>", views.CakePopsDetailView.as_view(), name="cake_pops_details"),
+
 ]
+
+

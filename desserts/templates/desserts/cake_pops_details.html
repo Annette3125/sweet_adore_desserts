@@ -1,0 +1,14 @@
+{% extends "desserts/base.html" %}
+{% load static %}
+
+{% block title %}Cake Pops Details{% endblock %}
+
+{% block content %}
+
+  <h2>{{ cake_pops.name }}</h2>
+  <hr />
+  <p><strong>Cake Pops </strong>{{ cake_pops.name }}</p>
+ <p><strong>Description</strong>{{ cake_pops.description|safe }}</p>
+  <p><strong>Price </strong>{{ cake_pops.price }}</p>
+
+{% endblock content %}

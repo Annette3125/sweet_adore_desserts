@@ -1,0 +1,21 @@
+{% extends "desserts/base.html" %}
+
+{% load static %}
+{% block title %}Cakes{% endblock %}
+
+{% block content %}
+
+    {% if cake_pops %}
+    <h2>Cake Pops </h2>
+
+      <h5>The perfect Cake Pops!</h5>
+    <ul>
+          {% for cake_pop in cake_pops %}
+    <li><a href="{% url 'cake_pops_details' cake_pop.id %}">{{ cake_pop.name }} </a></li>
+              {% endfor %}
+    </ul>
+            {% else %}
+    <h2>There are no Cake Pops at the moment.</h2>
+            {% endif %}
+
+            {% endblock content %}
