@@ -2,7 +2,7 @@ from django.db import models
 from tinymce.models import HTMLField
 
 from my_auth.models import User
-
+from PIL import Image
 
 class Option(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
@@ -32,6 +32,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     description = HTMLField("Description", max_length=4096, default="")
     price = models.FloatField(blank=False, null=False)
+    image = models.ImageField(upload_to="products", blank=True, null=True)
 
     class Meta:
         verbose_name = "Product"
@@ -40,6 +41,17 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name} {self.price} € {self.category}"
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        try:
+            img = Image.open(self.image.path)
+            size = 400
+            if img.height > size or img.width > size:
+                output_size = (size, size)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
+        except ValueError:
+            pass
 
 class Order(models.Model):
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)

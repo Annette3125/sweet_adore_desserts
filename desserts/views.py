@@ -74,6 +74,10 @@ class CookiesDetailView(generic.DetailView):
     model = Product
     context_object_name = "cookies"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["image_url"] = self.object.image.url if self.object.image else None
+        return context
 
 class CakePopsListView(generic.ListView):
     template_name = "desserts/cake_pops.html"
