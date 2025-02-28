@@ -49,16 +49,18 @@ def create_order_line(request):
     return render(request, "desserts/generic_form.html", context)
 
 
+class CakesListView(generic.ListView):
+    template_name = "desserts/cakes.html"
+    model = Product
+    context_object_name = "cakes"
 
+    def get_queryset(self):
+        return Product.objects.filter(category__name="Cakes")
 
-def cakes(request):
-    cakes_ = Option.objects.all()
-    return render(request, "desserts/cakes.html", {"cakes": cakes_})
-
-
-def cake_details(request, pk):
-    cake_ = get_object_or_404(Option, pk=pk)
-    return render(request, "desserts/cake_details.html", {"cake": cake_})
+class CakeDetailView(generic.DetailView):
+    template_name = "desserts/cake_details.html"
+    model = Product
+    context_object_name = "cakes"
 
 
 class CookiesListView(generic.ListView):
