@@ -5,10 +5,28 @@
 
 {% block content %}
 
-  <h2>{{ cookies.name }}</h2>
-  <hr />
-  <p><strong>Cookies </strong>{{ cookies.name }}</p>
-  <p><strong>Description</strong>{{ cookies.description|safe }}</p>
-  <p><strong>Price </strong>{{ cookies.price }}</p>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Tekstas kairėje -->
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <h2>{{ cookies.name }}</h2>
+            <p><strong>Description:</strong> {{ cookies.description|safe }}</p>
+            <p><strong>Price:</strong> {{ cookies.price }} €</p>
+        </div>
+        <!-- Nuotrauka dešinėje -->
+        <div class="col-md-6 text-center">
+            {% if cookies.image %}
+                <img src="{{ cookies.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ cookies.name }}">
+            {% else %}
+                <img src="{% static 'desserts/img/default.jpg' %}" class="img-fluid rounded shadow-lg" alt="No Image Available">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
 
 {% endblock content %}
