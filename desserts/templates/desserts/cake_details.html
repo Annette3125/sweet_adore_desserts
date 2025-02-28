@@ -7,8 +7,8 @@
 
   <h2>{{ cake.name }}</h2>
   <hr />
-  <li><strong>Cake </strong>{{ cake.name }}</li>
-  <li><strong>Client </strong>{{ order.user}}</li>
-  <li><strong>Price </strong>{{ order.price }}</li>
+  <li><strong>Cake </strong>{{ cakes.name }}</li>
+  <li><strong>Description </strong>{{ cakes.description|safe }}</li>
+  <li><strong>Price </strong>{{ cakes.price }}</li>
 
 {% endblock content %}
