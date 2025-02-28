@@ -1,9 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.views import generic
 from django.views.generic.edit import FormView
-from django.urls import reverse,reverse_lazy
+from django.urls import reverse
 from .forms import OrderLineForm, OrderForm
 from .models import Option, Product, Cocktail, Order
 
@@ -22,7 +23,7 @@ def index(request):
 
     return render(request, "desserts/index.html", context=context)
 
-
+@login_required
 def create_order(request):
     if request.method == "POST":
         form = OrderForm(request.POST)
@@ -35,7 +36,7 @@ def create_order(request):
 
     return render(request, "desserts/generic_form.html", context)
 
-
+@login_required
 def create_order_line(request):
     if request.method == "POST":
         form = OrderLineForm(request.POST)
