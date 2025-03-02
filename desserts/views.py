@@ -28,7 +28,10 @@ def create_order(request):
     if request.method == "POST":
         form = OrderForm(request.POST)
         if form.is_valid():
-            form.save()
+            order = form.save(commit=False)
+            order.user = request.user
+            order.save()
+            form.save_m2m()
             return HttpResponseRedirect(reverse("create_order"))
     else:
         form = OrderForm()
@@ -108,9 +111,6 @@ class OrderDetailView(generic.DetailView):
     model = Order
     template_name = "desserts/order_details.html"
     context_object_name = "order"
-
-
-
 
 
 
