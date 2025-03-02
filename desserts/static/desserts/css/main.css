@@ -25,10 +25,14 @@ a {
 
 .card {
     border: 4px solid #B69E8B; /* Rėmelio storis, stilius ir spalva */
-    border-radius: 10px; /* Užapvalinti kampai (jei nori) */
+    border-radius: 10px; /* Užapvalinti kampai */
 }
 
-
+.banner{
+    display: block;
+    width: 100%
+    max-width: 800px;
+}
 
 .heart {
   position: relative;

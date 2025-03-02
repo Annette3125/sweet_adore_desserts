@@ -5,45 +5,44 @@
 
 {% block content %}
 <h2>Orders</h2>
-  <h5>Yours order:</h5>
-  <br />
-   {% if page_obj %}
+<h5>Yours order:</h5>
+<br/>
+{% if page_obj %}
 <div class="cards-container">
-   {% for order in page_obj %}
+    {% for order in page_obj %}
 
-  <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Your order</h5>
-    <p class="card-text">Here you see the first date when ordered, your email, deadline of the order and total price. </p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{ order.order_date|date:"Y-m-d, H:i" }}</li>
-    <li class="list-group-item">{{ order.user }}</li>
-    <li class="list-group-item">{{ order.deadline|date:"Y-m-d, H:i" }}</li>
-    <li class="list-group-item">{{ order.total_price }} €</li>
-    <li class="list-group-item">Order Status: {{ order.status }} </li>
-    </ul>
-  <div class="card-body">
-    <a href="{% url 'order_details' order.id %}" class="card-link">Order details</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>
+    <div class="card" style="width: 18rem;">
+        {% if order.lines.first.product.image %}
+        <img src="{{ order.lines.first.product.image.url }}" class="card-img-top" alt="...">
+        {% else %}
+        <img src="{% static 'desserts/img/default.jpg' %}" class="card-img-top" alt="No Image Available">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">Your order</h5>
+            <p class="card-text">Here you see the first date when ordered, your email, deadline of the order and total
+                price. </p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ order.order_date|date:"Y-m-d, H:i" }}</li>
+            <li class="list-group-item">{{ order.user }}</li>
+            <li class="list-group-item">{{ order.deadline|date:"Y-m-d, H:i" }}</li>
+            <li class="list-group-item">{{ order.total_price }} €</li>
+            <li class="list-group-item">Order Status: {{ order.status }}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{% url 'order_details' order.id %}" class="card-link">Order details</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
     <br>
-   {% endfor %}
-   {% else %}
-<p>There are no orders at the moment.</p>
-   {% endif %}
+    {% endfor %}
+    {% else %}
+    <p>There are no orders at the moment.</p>
+    {% endif %}
 
-
-   {% for order in page_obj %}
-    {# Each "order" is a Order model object. #}
-    {{ order.full_name|upper }}<br>
-    ...
-{% endfor %}
-
-<div class="pagination">
-    <div class="pagination pagination-sm justify-content-center">
+</div>
+    <div class="pagination-container">
+        <div class="pagination pagination-sm justify-content-center">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -59,8 +58,7 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-</div>
-</div>
+        </div>
     </div>
-  {% endblock content %}
 
+{% endblock content %}
