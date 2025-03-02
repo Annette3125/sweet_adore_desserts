@@ -45,7 +45,7 @@ class Product(models.Model):
         super().save(*args, **kwargs)
         try:
             img = Image.open(self.image.path)
-            size = 400
+            size = 500
             if img.height > size or img.width > size:
                 output_size = (size, size)
                 img.thumbnail(output_size)
@@ -94,7 +94,7 @@ class OrderLine(models.Model):
         Order, on_delete=models.CASCADE, blank=True, null=True, related_name="lines"
     )
     options = models.ManyToManyField(
-        Option, blank=False)
+        Option, blank=False, help_text="*To select more than one Option, press CTRL and left mouse key.")
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, blank=True, null=True
     )
@@ -114,7 +114,7 @@ class OrderLine(models.Model):
         return str(self.price)
 
     def __str__(self):
-        return f"({self.options}, {self.product} {self.order} qty: {self.quantity})"
+        return f"({self.options}, {self.product} {self.order} qty: {self.quantity}) "
 
 
 class Cocktail(models.Model):
