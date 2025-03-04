@@ -16,13 +16,15 @@ d
 {% endcomment %}
 
 
-<body class="body_login">
+<div class="body_login">
   <form method="post" class="form-signup">
     {% csrf_token %}
     {{form|crispy}}
-    <button type="submit" class="save btn btn-dark">Sign up</button>
+    <button type="submit" class="save btn btn-dark">Sign in</button>
   </form>
-</body>
+</div>
+  <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+
 {% endblock content %}
 
 
