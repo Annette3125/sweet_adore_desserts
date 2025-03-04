@@ -6,7 +6,7 @@ from django.views import generic
 from django.views.generic.edit import FormView
 from django.urls import reverse
 from .forms import OrderLineForm, OrderForm
-from .models import Option, Product, Cocktail, Order
+from .models import Option, Product, Cocktail, Order, GalleryCategory, GalleryImage
 
 
 def index(request):
@@ -15,10 +15,16 @@ def index(request):
     num_cookies = Product.objects.filter(category__name="Cookies").count()
     num_cake_pops = Product.objects.filter(category__name="Cake Pops").count()
     num_cocktails_recipes = Cocktail.objects.all().count
+
+    homepage_category = GalleryCategory.objects.filter(name="Homepage").first()
+
+    gallery_images = GalleryImage.objects.filter(image_category=homepage_category) if homepage_category else []
+
     context = {"num_cakes": num_cakes,
                "num_cookies": num_cookies,
                "num_cake_pops": num_cake_pops,
                "num_cocktails_recipes": num_cocktails_recipes,
+               "gallery_images": gallery_images
                }
 
     return render(request, "desserts/index.html", context=context)

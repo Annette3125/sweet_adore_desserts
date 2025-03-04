@@ -1,18 +1,10 @@
 from django.db import models
+from django import forms
+from PIL import Image
 from tinymce.models import HTMLField
 
 from my_auth.models import User
-from PIL import Image
 
-class Option(models.Model):
-    name = models.CharField(max_length=200, blank=True, null=True)
-
-    class Meta:
-        verbose_name = "Option"
-        verbose_name_plural = "Options"
-
-    def __str__(self):
-        return f"{self.name}"
 
 class Category(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
@@ -21,9 +13,9 @@ class Category(models.Model):
         verbose_name = "Category"
         verbose_name_plural = "Categories"
 
-
     def __str__(self):
         return f"{self.name}"
+
 
 class Product(models.Model):
     category = models.ForeignKey(
@@ -53,6 +45,18 @@ class Product(models.Model):
         except ValueError:
             pass
 
+
+class Option(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Option"
+        verbose_name_plural = "Options"
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 class Order(models.Model):
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -66,7 +70,7 @@ class Order(models.Model):
         NEW: "New",
         IN_PROGRESS: "In Progress",
         COMPLETED: "Completed",
-        DELIVERED: "Delivered"
+        DELIVERED: "Delivered",
     }
     status = models.CharField(
         max_length=1, choices=ORDER_STATUSES, default="NEW", blank=True
@@ -89,12 +93,16 @@ class Order(models.Model):
     def __str__(self):
         return f" Order date: {self.order_date} {self.user} {self.total_price} €, Return date: {self.deadline}"
 
+
 class OrderLine(models.Model):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, blank=True, null=True, related_name="lines"
     )
     options = models.ManyToManyField(
-        Option, blank=False, help_text="*To select more than one Option, press CTRL and left mouse key.")
+        Option,
+        blank=False,
+        help_text="*To select more than one Option, press CTRL and left mouse key.",
+    )
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, blank=True, null=True
     )
@@ -104,12 +112,18 @@ class OrderLine(models.Model):
         verbose_name = "Order Line"
         verbose_name_plural = "Order Lines"
 
-
+    def clean_product(self):
+        product = self.cleaned_data.get("product")
+        if not product:
+            raise forms.ValidationError("Please select a product.")
+        return product
 
     @property
     def price(self):
-        return self.product.price * self.quantity
-
+        if self.product:
+            return self.product.price * self.quantity
+        else:
+            return 0
     def get_price_display(self):
         return str(self.price)
 
@@ -129,3 +143,19 @@ class Cocktail(models.Model):
     def __str__(self):
         return f"{self.cocktail_name}"
 
+
+class GalleryCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class GalleryImage(models.Model):
+    image = models.ImageField(upload_to="gallery")
+    image_category = models.ForeignKey(
+        GalleryCategory, on_delete=models.CASCADE, related_name="images"
+    )
+
+    def __str__(self):
+        return f"({self.image_category})"
