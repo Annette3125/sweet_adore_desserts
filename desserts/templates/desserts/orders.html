@@ -15,7 +15,7 @@
         {% if order.lines.first.product.image %}
         <img src="{{ order.lines.first.product.image.url }}" class="card-img-top" alt="...">
         {% else %}
-        <img src="{% static 'desserts/img/default.jpg' %}" class="card-img-top" alt="No Image Available">
+        <img src="{% static 'desserts/img/default.png' %}" class="card-img-top" alt="No Image Available">
         {% endif %}
         <div class="card-body">
             <h5 class="card-title">Your order</h5>
