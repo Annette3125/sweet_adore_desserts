@@ -5,10 +5,26 @@
 
 {% block content %}
 
-  <h2>{{ cake.name }}</h2>
-  <hr />
-  <li><strong>Cake </strong>{{ cakes.name }}</li>
-  <li><strong>Description </strong>{{ cakes.description|safe }}</li>
-  <li><strong>Price </strong>{{ cakes.price }}</li>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Tekstas kairėje -->
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <h2>{{ cake.name }}</h2>
+            <p><strong>Description </strong>{{ cake.description|safe }}</p>
+            <p><strong>Price </strong>{{ cake.price }}</p>
+        </div>
+
+        <!-- Nuotrauka dešinėje -->
+        <div class="col-md-6 text-center">
+            {% if cake.image %}
+            <img src="{{ cake.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ cake.name }}">
+            {% else %}
+            <img src="{% static 'desserts/img/default.jpg' %}" class="img-fluid rounded shadow-lg"
+                 alt="No Image Available">
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
