@@ -67,10 +67,21 @@ class CakesListView(generic.ListView):
     def get_queryset(self):
         return Product.objects.filter(category__name="Cakes")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Gaunam visas galerijos nuotraukas, kurios priklauso "Cakes" kategorijai
+        cake_category = GalleryCategory.objects.filter(name="Cakes").first()
+        if cake_category:
+            context["gallery_images"] = GalleryImage.objects.filter(image_category=cake_category)
+        else:
+            context["gallery_images"] = []
+        return context
+
 class CakeDetailView(generic.DetailView):
     template_name = "desserts/cake_details.html"
     model = Product
     context_object_name = "cake"
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
