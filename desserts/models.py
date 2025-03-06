@@ -104,7 +104,7 @@ class OrderLine(models.Model):
         help_text="*To select more than one Option, press CTRL and left mouse key.",
     )
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, blank=True, null=True
+        Product, on_delete=models.CASCADE, blank=False, null=True
     )
     quantity = models.IntegerField(blank=True, null=False, default=1)
 
@@ -112,11 +112,6 @@ class OrderLine(models.Model):
         verbose_name = "Order Line"
         verbose_name_plural = "Order Lines"
 
-    def clean_product(self):
-        product = self.cleaned_data.get("product")
-        if not product:
-            raise forms.ValidationError("Please select a product.")
-        return product
 
     @property
     def price(self):
