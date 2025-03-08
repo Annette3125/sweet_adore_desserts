@@ -6,6 +6,17 @@ from tinymce.models import HTMLField
 from my_auth.models import User
 
 
+class Option(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Option"
+        verbose_name_plural = "Options"
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 class Category(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
 
@@ -21,6 +32,10 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, blank=True, null=True
     )
+    options = models.ManyToManyField(
+        Option,
+        blank=True, null=True
+    )
     name = models.CharField(max_length=200, blank=True, null=True)
     description = HTMLField("Description", max_length=4096, default="")
     price = models.FloatField(blank=False, null=False)
@@ -31,7 +46,7 @@ class Product(models.Model):
         verbose_name_plural = "Products"
 
     def __str__(self):
-        return f"{self.name} {self.price} € {self.category}"
+        return f"{self.name} {self.price} € {self.category} {self.options}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -44,17 +59,6 @@ class Product(models.Model):
                 img.save(self.image.path)
         except ValueError:
             pass
-
-
-class Option(models.Model):
-    name = models.CharField(max_length=200, blank=True, null=True)
-
-    class Meta:
-        verbose_name = "Option"
-        verbose_name_plural = "Options"
-
-    def __str__(self):
-        return f"{self.name}"
 
 
 class Order(models.Model):
@@ -104,7 +108,7 @@ class OrderLine(models.Model):
         help_text="*To select more than one Option, press CTRL and left mouse key.",
     )
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, blank=False, null=True
+        Product, on_delete=models.CASCADE, blank=False, null=True, related_name="order_line"
     )
     quantity = models.IntegerField(blank=True, null=False, default=1)
 
@@ -151,6 +155,7 @@ class GalleryImage(models.Model):
     image_category = models.ForeignKey(
         GalleryCategory, on_delete=models.CASCADE, related_name="images"
     )
+    name = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return f"({self.image_category})"

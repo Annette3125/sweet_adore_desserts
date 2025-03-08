@@ -1,11 +1,16 @@
 from django.contrib import admin
 
-from desserts.models import (Category, Cocktail, GalleryImage, Option, Order,
-                             OrderLine, Product, GalleryCategory)
+from desserts.models import (Category, Cocktail, GalleryCategory, GalleryImage,
+                             Option, Order, OrderLine, Product)
 
 
 class OrderLineInline(admin.TabularInline):
     model = OrderLine
+    extra = 0
+
+
+class ProductInline(admin.TabularInline):
+    model = Product
     extra = 0
 
 
@@ -25,7 +30,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    model= Product
+    model = Product
     list_display = ["category", "name", "description", "price"]
     list_filter = ["category", "name", "price"]
     list_editable = ["name", "description", "price"]
@@ -46,8 +51,8 @@ class GalleryCategoryAdmin(admin.ModelAdmin):
 
 class GalleryImageAdmin(admin.ModelAdmin):
     model = GalleryImage
-    list_display = ["image_category"]
-    list_filter = ["image_category"]
+    list_display = ["image_category", "name"]
+    list_filter = ["image_category", "name"]
 
 
 admin.site.register(Option, OptionAdmin)
