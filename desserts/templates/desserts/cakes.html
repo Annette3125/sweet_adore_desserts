@@ -1,70 +1,32 @@
 {% extends "desserts/base.html" %}
-
 {% load static %}
+
 {% block title %}Cakes{% endblock %}
 
 {% block content %}
 
 
-<div class="container mt-4">
+<div class="container mt-5">
     <div class="row">
-        <!--Tekstas kaireje -->
-        <div class="col-md-6">
+        <!-- Tekstas kairėje -->
+        {% for cake in cakes %}
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <h2>{{ cake.name }}</h2>
+            <p><strong>Description </strong>{{ cake.description|safe }}</p>
+            <p><strong>Price </strong>{{ cake.price }}</p>
+        </div>
 
-            {% if cakes %}
-            <h2>Cakes</h2>
-             <h5><i>A celebration is incomplete without</i></h5>
-            <h5><i>a cake! Make every occasion </i></h5>
-            <h5><i>special with Cake and choose </i></h5>
-            <h5><i>from our wide range of celebration cakes!</i></h5>
-            <ul>
-                {% for cake in cakes %}
-                <li><a href="{% url 'cake_details' cake.id %}">{{ cake.name }}</a>
-                </li>
-                {% endfor %}
-            </ul>
+        <!-- Nuotrauka dešinėje -->
+        <div class="col-md-6 text-center">
+            {% if cake.image %}
+            <img src="{{ cake.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ cake.name }}">
             {% else %}
-            <h2>There are no cakes at the moment.</h2>
+            <img src="{% static 'desserts/img/default.jpg' %}" class="img-fluid rounded shadow-lg"
+                 alt="No Image Available">
             {% endif %}
         </div>
-
-
-
-<!-- Karuselė dešinėje -->
-<div class="col-md-6">
-    {% if gallery_images %}
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            {% for image in gallery_images %}
-            <button type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="{{ forloop.counter0 }}"
-                    {% if forloop.first %} class="active" aria-current="true" {% endif %}
-                    aria-label="Slide {{ forloop.counter }}"></button>
-            {% endfor %}
-        </div>
-        <div class="carousel-inner">
-            {% for image in gallery_images %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ image.image.url }}" class="d-block w-100" alt="Cake Image">
-            </div>
-            {% endfor %}
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        {% endfor %}
     </div>
-    {% else %}
-    <p>No images available.</p>
-    {% endif %}
-</div>
-</div>
 </div>
 
-{% endblock content%}
+{% endblock content %}

@@ -59,13 +59,11 @@ def create_order_line(request):
     return render(request, "desserts/generic_form.html", context)
 
 
-class CakesListView(generic.ListView):
-    template_name = "desserts/cakes.html"
-    model = Product
-    context_object_name = "cakes"
+class CakesOptionListView(generic.ListView):
+    template_name = "desserts/cakes_option.html"
+    model = Option
+    context_object_name = "options"
 
-    def get_queryset(self):
-        return Product.objects.filter(category__name="Cakes")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -76,6 +74,21 @@ class CakesListView(generic.ListView):
         else:
             context["gallery_images"] = []
         return context
+
+
+
+class CakeListView(generic.DetailView):
+    template_name = "desserts/cakes.html"
+    model = Option
+    context_object_name = "cakes"
+
+    def get_context_data(self, **kwargs):
+        option = self.get_object()
+        cakes = Product.objects.filter(options__name=option.name)
+        return {
+            "cakes": cakes,
+        }
+
 
 class CakeDetailView(generic.DetailView):
     template_name = "desserts/cake_details.html"
