@@ -1,0 +1,45 @@
+{% extends "desserts/base.html" %}
+
+{% load static %}
+{% block title %}Cookies{% endblock %}
+
+{% block content %}
+
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <!-- On the left - Contact info -->
+        <div class="col-md-6">
+<h1>Contacts</h1>
+<p>
+    <strong>Address:</strong>
+    <br> {{ contact.address }}
+    <br> {{ contact.city }}
+    <br> {{ contact.email }}
+</p>
+
+<p>
+    <strong>Phone:</strong>
+    <br> {{ contact.phone }}
+</p>
+
+<p>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2250.528870615727!2d21.196066990788832!3d55.6624029035647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46e4dd078201711b%3A0xa87df62eb45e6c08!2sMogiliovo%2016%2C%20Klaip%C4%97da%2C%20Klaip%C4%97dos%20m.%20sav.!5e0!3m2!1slt!2slt!4v1741875319151!5m2!1slt!2slt"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" width="600" height="450" frameborder="0" style="border:0"
+            allowfullscreen></iframe>
+</p>
+
+  </div>
+
+        <!-- On the right - Logo -->
+        <div class="col-md-6 text-center d-flex align-items-center justify-content-center">
+            <img src="{% static 'desserts/img/logo_big.jpg' %}" alt="Sweet Adore Desserts Logo"
+                 class="img-fluid contact-logo">
+        </div>
+    </div>
+</div>
+</body>
+
+
+{% endblock content %}

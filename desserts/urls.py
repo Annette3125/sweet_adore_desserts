@@ -15,7 +15,7 @@ urlpatterns = [
     path("orders/<int:pk>", views.OrderDetailView.as_view(), name="order_details"),
     path("cake_pops/", views.CakePopsListView.as_view(), name="cake_pops"),
     path("cake_pops/<int:pk>", views.CakePopsDetailView.as_view(), name="cake_pops_details"),
-
+    path("contacts/", views.contacts, name="contacts")
 ]
 
 

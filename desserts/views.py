@@ -148,3 +148,6 @@ class OrderDetailView(generic.DetailView):
 
 
 
+def contacts(request):
+    contact = Contact.objects.first()
+    return render(request, "desserts/contacts.html", {"contact": contact})

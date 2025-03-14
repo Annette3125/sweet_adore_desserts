@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from desserts.models import (Category, Cocktail, GalleryCategory, GalleryImage,
-                             Option, Order, OrderLine, Product)
+                             Option, Order, OrderLine, Product, Contact)
 
 
 class OrderLineInline(admin.TabularInline):
@@ -63,3 +63,4 @@ admin.site.register(Order, OrderAdmin)
 admin.site.register(Cocktail, CocktailAdmin)
 admin.site.register(GalleryImage, GalleryImageAdmin)
 admin.site.register(GalleryCategory, GalleryCategoryAdmin)
+admin.site.register(Contact)
