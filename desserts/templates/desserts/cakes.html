@@ -11,7 +11,7 @@
         <!-- Tekstas kairėje -->
         {% for cake in cakes %}
         <div class="col-md-6 d-flex flex-column justify-content-center">
-            <h2>{{ cake.name }}</h2>
+            <h2><a href="{% url 'cake_details' cake.id %}">{{ cake.name }}</a></h2>
             <p><strong>Description </strong>{{ cake.description|safe }}</p>
             <p><strong>Price </strong>{{ cake.price }}</p>
         </div>
