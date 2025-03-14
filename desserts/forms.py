@@ -21,11 +21,7 @@ class ProductForm(ModelForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order
-        fields = ["user", "deadline"]
+        fields = ["user", "deadline", "options", "product", "quantity"]
         widgets = {"user": HiddenInput()}
 
 
-class OrderLineForm(ModelForm):
-    class Meta:
-        model = OrderLine
-        fields = "__all__"

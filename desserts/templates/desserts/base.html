@@ -61,12 +61,13 @@
 
              {% if user.is_authenticated %}
 
+                <li class="nav-item">
+            <a class="nav-link" href="{% url 'orders' %}">Orders</a>
+           </li>
+
+
           <li class="nav-item">
                 <a class="nav-link" href="{% url 'create_order' %}">Create Order</a>
-              </li>
-
-      <li class="nav-item">
-                <a class="nav-link" href="{% url 'create_order_line' %}">Choose options</a>
               </li>
 
               <li class="nav-item">

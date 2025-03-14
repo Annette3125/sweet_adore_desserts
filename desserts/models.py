@@ -62,6 +62,19 @@ class Order(models.Model):
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     deadline = models.DateTimeField(verbose_name="Deadline", null=True, blank=True)
+    options = models.ManyToManyField(
+        Option,
+        blank=False,
+        help_text="*To select more than one Option, press CTRL and left mouse key.",
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=True,
+       )
+    quantity = models.IntegerField(blank=True, null=False, default=1)
+
 
     NEW = "N"
     IN_PROGRESS = "P"
@@ -92,6 +105,7 @@ class Order(models.Model):
             return self.product.price * self.quantity
         else:
             return 0
+
     def get_price_display(self):
         return str(self.price)
 

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from desserts.models import (Category, Cocktail, GalleryCategory, GalleryImage,
-                             Option, Order, OrderLine, Product, Contact)
+                             Option, Order, Product, Contact)
 
 
 
