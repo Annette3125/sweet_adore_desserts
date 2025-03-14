@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -145,6 +145,8 @@ MEDIA_URL = "media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# if "test" in sys.argv:
+#     TINYMCE_DEFAULT_CONFIG = {}  # Testavimo metu TinyMCE bus ignoruojamas
 
 TINYMCE_DEFAULT_CONFIG = {
     "height": 360,
@@ -177,3 +179,5 @@ TINYMCE_DEFAULT_CONFIG = {
 # Bootstrap5 template pack for django-crispy-forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+APPEND_SLASH = True
