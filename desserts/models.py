@@ -84,38 +84,10 @@ class Order(models.Model):
         verbose_name = "Order"
         verbose_name_plural = "Orders"
 
-    @property
-    def total_price(self):
-        total_price = 0
-        for line in self.lines.all():
-            total_price += line.price
-        return total_price
-
-    def get_total_price_display(self):
-        return str(self.total_price)
 
     def __str__(self):
-        return f" Order date: {self.order_date} {self.user} {self.total_price} €, Return date: {self.deadline}"
-
-
-class OrderLine(models.Model):
-    order = models.ForeignKey(
-        Order, on_delete=models.CASCADE, blank=True, null=True, related_name="lines"
-    )
-    options = models.ManyToManyField(
-        Option,
-        blank=False,
-        help_text="*To select more than one Option, press CTRL and left mouse key.",
-    )
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, blank=False, null=True, related_name="order_line"
-    )
-    quantity = models.IntegerField(blank=True, null=False, default=1)
-
-    class Meta:
-        verbose_name = "Order Line"
-        verbose_name_plural = "Order Lines"
-
+        return (f" Order date: {self.order_date} {self.user} {self.price} €, Return date: {self.deadline}"
+                f"qty: {self.quantity} {self.product}")
 
     @property
     def price(self):
@@ -125,9 +97,6 @@ class OrderLine(models.Model):
             return 0
     def get_price_display(self):
         return str(self.price)
-
-    def __str__(self):
-        return f"({self.options}, {self.product} {self.order} qty: {self.quantity}) "
 
 
 class Cocktail(models.Model):

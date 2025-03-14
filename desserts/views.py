@@ -45,19 +45,6 @@ def create_order(request):
 
     return render(request, "desserts/generic_form.html", context)
 
-@login_required
-def create_order_line(request):
-    if request.method == "POST":
-        form = OrderLineForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse("create_order_line"))
-    else:
-        form = OrderLineForm()
-    context = {"form": form, "action_url": reverse("create_order_line")}
-
-    return render(request, "desserts/generic_form.html", context)
-
 
 class CakesOptionListView(generic.ListView):
     template_name = "desserts/cakes_option.html"

@@ -1,5 +1,5 @@
 from django.forms import ModelForm, HiddenInput
-from .models import Option, Category, Product, Order, OrderLine, Cocktail
+from .models import Option, Category, Product, Order, Cocktail
 
 
 class OptionForm(ModelForm):

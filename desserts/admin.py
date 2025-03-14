@@ -4,10 +4,6 @@ from desserts.models import (Category, Cocktail, GalleryCategory, GalleryImage,
                              Option, Order, OrderLine, Product, Contact)
 
 
-class OrderLineInline(admin.TabularInline):
-    model = OrderLine
-    extra = 0
-
 
 class ProductInline(admin.TabularInline):
     model = Product
@@ -16,8 +12,7 @@ class ProductInline(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ["id"]
-    inlines = [OrderLineInline]
-    list_display = ["order_date", "total_price", "user", "deadline", "status"]
+    list_display = ["order_date", "price", "user", "deadline", "status"]
     list_editable = ["deadline", "status"]
 
 
@@ -58,7 +53,6 @@ class GalleryImageAdmin(admin.ModelAdmin):
 admin.site.register(Option, OptionAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(OrderLine)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Cocktail, CocktailAdmin)
 admin.site.register(GalleryImage, GalleryImageAdmin)
