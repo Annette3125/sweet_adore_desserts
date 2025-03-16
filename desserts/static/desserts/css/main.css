@@ -49,7 +49,7 @@ a {
 }
 
 
-/* Vidutinė širdelė (15px) */
+/* Middle heart (15px) */
 .heart.medium {
   width: 15px;
   height: 15px;
@@ -108,8 +108,8 @@ nav ul li {
 }
 
 footer {
-  color: #b69e8b;
-  background-color: #dbc6b6;
+  color: #FF00FF;
+  background-color: #FFC0CB;
   min-height: 70px;
   display: flex;
   align-items: center;
@@ -117,6 +117,110 @@ footer {
   font-style: italic;
 }
 
+.checked {
+  color: Fuchsia;
+}
+
+.my-btn{
+    background-color: inherit !important:
+    border: 0 !important;
+
+}
+
+
+.logo-container {
+    display: flex;
+    justify-content: center; /* center horizontal */
+    align-items: center; /* center vertical */
+    height: 100%; /* Ensures full height coverage */
+}
+
+.logo-img {
+    max-width: 80%; /* Not to big logo*/
+    height: auto;
+}
 
 
 
+
+#stars
+
+#full-stars {
+     display: inline-flex;
+     text-align: center;
+ }
+
+ .rating-group {
+     display: inline-block;
+ }
+
+ .rating__label {
+     cursor: pointer;
+     margin-right: 5px;
+ }
+
+ .rating__icon {
+     font-size: 20px;
+     color: #fff;
+     transition: color 0.3s, transform 0.3s;
+     border: 1px solid transparent;
+     border-radius: 50%;
+     padding: 3px;
+ }
+
+ .rating__input {
+     display: none;
+ }
+
+ .rating__label:hover .rating__icon,
+ .rating__input:checked~.rating__label .rating__icon {
+     color: #ffd700;
+ }
+
+ .stars-container {
+     direction: ltr;
+     display: flex;
+     flex-direction: row-reverse;
+     align-items: flex-end;
+ }
+
+ .stars-container .rating__label:hover~.rating__label .rating__icon,
+ .stars-container .rating__input:checked~.rating__label .rating__icon {
+     color: #ffd700;
+ }
+
+
+ .comment_rating {
+     font-size: 14px;
+     /* Adjust the font size as desired */
+ }
+
+ .comment_rating .rating__icon {
+     font-size: 12px;
+     /* Adjust the star size as desired */
+     color: #ffd700;
+     /* Set the color to yellow */
+ }
+
+ .meta .rating__icon {
+     font-size: 12px;
+     color: #ffd700;
+ }
+
+
+
+
+.btn-pink {
+    background-color: #FFC0CB !important; /* Švelniai rožinė spalva */
+    color: white !important; /* Baltas tekstas */
+    border: 2px solid #FF69B4; /* Šiek tiek tamsesnis rožinis rėmelis */
+    padding: 10px 20px; /* Didesnis mygtukas */
+    border-radius: 5px; /* Užapvalinti kampai */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-pink:hover {
+    background-color: #FF69B4 !important; /* Ryškesnė rožinė užvedus pelę */
+}
