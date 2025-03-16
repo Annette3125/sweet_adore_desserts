@@ -1,5 +1,6 @@
+from django import forms
 from django.forms import ModelForm, HiddenInput
-from .models import Option, Category, Product, Order, Cocktail
+from .models import Option, Category, Product, Order, ProductRating
 
 
 class OptionForm(ModelForm):
@@ -25,3 +26,20 @@ class OrderForm(ModelForm):
         widgets = {"user": HiddenInput()}
 
 
+REVIEW_CHOICES = [
+    ("1", "1"),
+    ("2", "2"),
+    ("3", "3"),
+    ("4", "4"),
+    ("5", "5")
+    ]
+
+class ProductRatingForm(ModelForm):
+    class Meta:
+        model = ProductRating
+        fields = ["product", "text", "author", "score"]
+        widgets = {
+            "score": forms.RadioSelect(choices=REVIEW_CHOICES),
+            "author": HiddenInput(),
+            "product": HiddenInput()
+        }

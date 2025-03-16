@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from desserts.models import (Category, Cocktail, GalleryCategory, GalleryImage,
-                             Option, Order, Product, Contact)
+                             Option, Order, Product, ProductRating, Contact)
 
 
 
@@ -57,4 +57,5 @@ admin.site.register(Order, OrderAdmin)
 admin.site.register(Cocktail, CocktailAdmin)
 admin.site.register(GalleryImage, GalleryImageAdmin)
 admin.site.register(GalleryCategory, GalleryCategoryAdmin)
+admin.site.register(ProductRating)
 admin.site.register(Contact)

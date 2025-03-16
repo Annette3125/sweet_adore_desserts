@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render, redirect
 from django.views import generic
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, FormMixin
 from django.urls import reverse
-from .forms import OrderLineForm, OrderForm
-from .models import Option, Product, Cocktail, Order, GalleryCategory, GalleryImage
+
+from .forms import OrderForm, ProductRatingForm
+from .models import Option, Product, Cocktail, Order, GalleryCategory, GalleryImage, ProductRating, Contact
 
 
 def index(request):
@@ -77,15 +78,40 @@ class CakeListView(generic.DetailView):
         }
 
 
-class CakeDetailView(generic.DetailView):
+class CakeDetailView(generic.edit.FormMixin, generic.DetailView):
     template_name = "desserts/cake_details.html"
     model = Product
     context_object_name = "cake"
+    form_class = ProductRatingForm
+
+
+    def get_success_url(self):
+        return reverse('cake_details', kwargs={'pk': self.object.id})
+
+    # Standard post method override using FormMixin, can be copied directly
+    # to our project.
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    # Specify that the order will be the one after which we comment,
+    # and the user will be the one who is logged in.
+    def form_valid(self, form):
+        form.instance.product = self.object
+        form.instance.author = self.request.user
+        form.save()
+        return super(CakeDetailView, self).form_valid(form)
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["image_url"] = self.object.image.url if self.object.image else None
+        context["ratings"] = self.object.ratings.all()
+        context["average_rating"] = self.object.average_rating
         return context
 
 class CookiesListView(generic.ListView):
@@ -105,6 +131,7 @@ class CookiesDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context["image_url"] = self.object.image.url if self.object.image else None
         return context
+
 
 class CakePopsListView(generic.ListView):
     template_name = "desserts/cake_pops.html"
@@ -132,6 +159,37 @@ class OrderDetailView(generic.DetailView):
     model = Order
     template_name = "desserts/order_details.html"
     context_object_name = "order"
+
+
+
+def rating_view(request):
+    obj = ProductRating.objects.filter(score=0).order_by("?").first()
+    context ={
+        'object': obj
+    }
+    return render(request, "desserts/ratings.html", context)
+
+
+def rate_product(request, product_id):
+    if request.method == 'POST':
+        val = request.POST.get("score")
+        text = request.POST.get("text")
+        product = Product.objects.get(id=product_id)
+
+        # Sukuriamas naujas įvertinimas
+        rating = ProductRating.objects.create(
+            product=product,
+            score=val,
+            author=request.user,
+            text=text
+        )
+        rating.save()
+
+        # Grąžinamas puslapis su atnaujintu įvertinimu
+        return redirect('cake_details', pk=product.id)
+    return JsonResponse({'success':'false'})
+
+
 
 
 

@@ -1,7 +1,10 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django import forms
+from django.db.models import Avg
 from PIL import Image
+from rest_framework.exceptions import ValidationError
 from tinymce.models import HTMLField
+
 
 from my_auth.models import User
 
@@ -57,6 +60,10 @@ class Product(models.Model):
         except ValueError:
             pass
 
+    @property
+    def average_rating(self):
+        avg = self.ratings.aggregate(Avg('score'))['score__avg']
+        return round(avg, 1) if avg else 0
 
 class Order(models.Model):
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
@@ -140,6 +147,32 @@ class GalleryImage(models.Model):
     def __str__(self):
         return f"({self.image_category})"
 
+
+class ProductRating(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, null=True, blank=True, related_name="ratings"
+    )
+    score = models.IntegerField(
+        default=0, validators=[MaxValueValidator(5), MinValueValidator(0)]
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.RESTRICT,
+        null=False,
+        blank=True,
+    )
+    date = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(null=False, blank=True, max_length=2000)
+
+
+    def clean_score(self):
+        if self.score < 1 or self.score > 5:
+            raise ValidationError("Score must be between 1 and 5.")
+        return self.score
+
+
+    def __str__(self):
+        return f" {self.author.username} - {self.product}⭐"
 
 class Contact(models.Model):
     address = models.CharField(max_length=255)

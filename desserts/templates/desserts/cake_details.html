@@ -1,5 +1,8 @@
 {% extends "desserts/base.html" %}
+
 {% load static %}
+
+{% load crispy_forms_tags %}
 
 {% block title %}Cake Details{% endblock %}
 
@@ -10,9 +13,10 @@
     <div class="row">
         <!-- Tekstas kairėje -->
         <div class="col-md-6 d-flex flex-column justify-content-center">
-            <h2>{{ cake.name }}<i>cake</i></h2>
+            <h2>{{ cake.name }}</h2>
             <p><strong>Description </strong>{{ cake.description|safe }}</p>
             <p><strong>Price </strong>{{ cake.price }}</p>
+
         </div>
 
         <!-- Nuotrauka dešinėje -->
@@ -26,5 +30,58 @@
         </div>
     </div>
 </div>
+
+<div class="comment-form clearfix">
+<h3><i class="fa fa-pencil"></i>Leave a Review</h3>
+  <form method="post" action="{% url 'rate_product' cake.id %}">
+        {% csrf_token %}
+
+      <div class="rating-group">
+            <div class="stars-container">
+                <input class="rating__input" name="score" id="rating_5" value="5" type="radio" required>
+                <label class="rating__label" for="rating_5"><i class="rating__icon fa fa-star"></i></label>
+
+                <input class="rating__input" name="score" id="rating_4" value="4" type="radio" required>
+                <label class="rating__label" for="rating_4"><i class="rating__icon fa fa-star"></i></label>
+
+                <input class="rating__input" name="score" id="rating_3" value="3" type="radio" required>
+                <label class="rating__label" for="rating_3"><i class="rating__icon fa fa-star"></i></label>
+
+                <input class="rating__input" name="score" id="rating_2" value="2" type="radio" required>
+                <label class="rating__label" for="rating_2"><i class="rating__icon fa fa-star"></i></label>
+
+                <input class="rating__input" name="score" id="rating_1" value="1" type="radio" required>
+                <label class="rating__label" for="rating_1"><i class="rating__icon fa fa-star"></i></label>
+            </div>
+        </div>
+
+      {{ form.text|as_crispy_field }}
+
+
+    <button type="submit" class="btn btn-pink">Submit Rating</button>
+    </form>
+</div>
+
+<h3>Reviews</h3>
+{% for rating in cake.ratings.all %}
+    <div class="review-box">
+        <strong>{{ rating.author.username }}</strong> - {{ rating.date|date:"Y-m-d H:i" }}
+        <p><strong>Overall Rating: </strong></p>
+<div class="stars-container">
+    {% for i in "12345" %}
+        {% if forloop.counter <= average_rating %}
+            <i class="fa fa-star text-warning"></i>  <!-- Full star -->
+        {% else %}
+            <i class="fa fa-star text-muted"></i>  <!-- Empty star -->
+        {% endif %}
+    {% endfor %}
+</div>
+        <p>Rating: {{ rating.score }} ⭐</p>
+        <p>{{ rating.text }}</p>
+        </div>
+
+{% empty %}
+    <p>No reviews yet.</p>
+{% endfor %}
 
 {% endblock content %}
