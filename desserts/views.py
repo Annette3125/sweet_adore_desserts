@@ -55,7 +55,7 @@ class CakesOptionListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Gaunam visas galerijos nuotraukas, kurios priklauso "Cakes" kategorijai
+        # We get all the photos in the gallery that belong to the "Cakes" category
         cake_category = GalleryCategory.objects.filter(name="Cakes").first()
         if cake_category:
             context["gallery_images"] = GalleryImage.objects.filter(image_category=cake_category)
@@ -147,7 +147,7 @@ class CakePopsDetailView(generic.DetailView):
     context_object_name = "cake_pops"
 
 
-class OrdersListView(generic.ListView):
+class OrdersListView(LoginRequiredMixin, generic.ListView):
     template_name = "desserts/orders.html"
     paginate_by = 4
     model = Order

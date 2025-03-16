@@ -35,7 +35,7 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, blank=True, null=True
     )
-    options = models.ManyToManyField(Option, blank=True, null=True)
+    options = models.ManyToManyField(Option, blank=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     description = HTMLField("Description", max_length=4096, default="")
     price = models.FloatField(blank=False, null=False)
