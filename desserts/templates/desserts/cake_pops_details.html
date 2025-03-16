@@ -5,10 +5,26 @@
 
 {% block content %}
 
-  <h2>{{ cake_pops.name }}</h2>
-  <hr />
-  <p><strong>Cake Pops </strong>{{ cake_pops.name }}</p>
- <p><strong>Description</strong>{{ cake_pops.description|safe }}</p>
-  <p><strong>Price </strong>{{ cake_pops.price }}</p>
+<div class="container mt-5">
+    <div class="row">
+        <!-- Text on the left -->
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+            <h2>{{ cake_pops.name }}</h2>
+            <p><strong>Description: </strong>{{ cake_pops.description|safe }}</p>
+            <p><strong>Price: </strong>{{ cake_pops.price }}</p>
+        </div>
+
+        <!-- Photo on the right -->
+        <div class="col-md-6 text-center">
+            {% if cake_pops.image %}
+                <img src="{{ cake_pops.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ cake_pops.name }}">
+            {% else %}
+                <img src="{% static 'desserts/img/default1.jpg' %}" class="img-fluid rounded shadow-lg" alt="No Image Available">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
 
 {% endblock content %}

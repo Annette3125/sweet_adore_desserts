@@ -141,6 +141,17 @@ class CakePopsListView(generic.ListView):
     def get_queryset(self):
         return Product.objects.filter(category__name="Cake Pops")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cake_pops_category = GalleryCategory.objects.filter(name="Cake Pops").first()
+        if cake_pops_category:
+            context["gallery_images"] = GalleryImage.objects.filter(image_category=cake_pops_category)
+        else:
+            context["gallery_images"] = []
+        print("Gallery Images:", context["gallery_images"])  # Patikrinti terminale ar yra duomenų
+        return context
+
+
 class CakePopsDetailView(generic.DetailView):
     template_name = "desserts/cake_pops_details.html"
     model = Product
