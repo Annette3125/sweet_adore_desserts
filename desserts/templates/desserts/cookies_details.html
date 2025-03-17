@@ -9,13 +9,13 @@
 
 <div class="container mt-5">
     <div class="row">
-        <!-- Tekstas kairėje -->
+        <!-- Text on the left -->
         <div class="col-md-6 d-flex flex-column justify-content-center">
             <h2>{{ cookies.name }}</h2>
             <p><strong>Description:</strong> {{ cookies.description|safe }}</p>
             <p><strong>Price:</strong> {{ cookies.price }} €</p>
         </div>
-        <!-- Nuotrauka dešinėje -->
+        <!-- Text on the right -->
         <div class="col-md-6 text-center">
             {% if cookies.image %}
                 <img src="{{ cookies.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ cookies.name }}">
