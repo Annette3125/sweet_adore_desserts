@@ -172,7 +172,6 @@ class OrderDetailView(generic.DetailView):
     context_object_name = "order"
 
 
-
 def rating_view(request):
     obj = ProductRating.objects.filter(score=0).order_by("?").first()
     context ={
@@ -199,9 +198,6 @@ def rate_product(request, product_id):
         # Grąžinamas puslapis su atnaujintu įvertinimu
         return redirect('cake_details', pk=product.id)
     return JsonResponse({'success':'false'})
-
-
-
 
 
 def contacts(request):

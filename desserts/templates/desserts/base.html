@@ -77,6 +77,11 @@
                 <a class="nav-link" href="{% url 'create_order' %}">Create Order</a>
               </li>
 
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    {% endif %}
+                </li>
               <li class="nav-item">
                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
                   {% csrf_token %}

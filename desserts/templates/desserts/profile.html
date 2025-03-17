@@ -1,0 +1,36 @@
+{% extends "desserts/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+  <div class="container" style="display: inline-block; width: 70%">
+    <div class="content-section">
+      <div class="media">
+        {% if user.profile.photo %}
+       <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}" alt="profile-photo">
+     {% else %}
+        <img src="{% static 'desserts/img/default-profile.png.png' %}" class="img-fluid rounded shadow-lg"
+                 alt="No Image Available">
+        {% endif %}
+
+
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.profile.name }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Profile info</legend>
+          {{ user_form|crispy }}
+          {{ profile_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
