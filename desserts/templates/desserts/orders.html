@@ -12,8 +12,8 @@
     {% for order in page_obj %}
 
     <div class="card" style="width: 18rem;">
-        {% if order.lines.first.product.image %}
-        <img src="{{ order.lines.first.product.image.url }}" class="card-img-top" alt="...">
+        {% if order.product.image %}
+        <img src="{{ order.product.image.url }}" class="card-img-top" alt="...">
         {% else %}
         <img src="{% static 'desserts/img/default.png' %}" class="card-img-top" alt="No Image Available">
         {% endif %}

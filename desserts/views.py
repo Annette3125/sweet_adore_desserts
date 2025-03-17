@@ -165,6 +165,8 @@ class OrdersListView(LoginRequiredMixin, generic.ListView):
     context_object_name = "orders"
     ordering = ["id"]
 
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user).order_by("id")
 
 class OrderDetailView(generic.DetailView):
     model = Order
