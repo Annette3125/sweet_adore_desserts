@@ -3,7 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.views import generic
-from django.views.generic.edit import FormView, FormMixin
 from django.urls import reverse
 
 from .forms import OrderForm, ProductRatingForm
@@ -122,6 +121,16 @@ class CookiesListView(generic.ListView):
     def get_queryset(self):
         return Product.objects.filter(category__name="Cookies")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cookies_category = GalleryCategory.objects.filter(name="Cookies").first()
+        if cookies_category:
+            context["gallery_images"] = GalleryImage.objects.filter(image_category=cookies_category)
+        else:
+            context["gallery_images"] = []
+        print("Gallery Images:", context["gallery_images"])  # Check if there is data in the terminal
+        return context
+
 class CookiesDetailView(generic.DetailView):
     template_name = "desserts/cookies_details.html"
     model = Product
@@ -148,7 +157,7 @@ class CakePopsListView(generic.ListView):
             context["gallery_images"] = GalleryImage.objects.filter(image_category=cake_pops_category)
         else:
             context["gallery_images"] = []
-        print("Gallery Images:", context["gallery_images"])  # Patikrinti terminale ar yra duomenų
+        print("Gallery Images:", context["gallery_images"])  # Check if there is data in the terminal
         return context
 
 
@@ -197,7 +206,7 @@ def rate_product(request, product_id):
         )
         rating.save()
 
-        # Grąžinamas puslapis su atnaujintu įvertinimu
+        # Returns page with updated rating
         return redirect('cake_details', pk=product.id)
     return JsonResponse({'success':'false'})
 
