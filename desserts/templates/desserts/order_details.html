@@ -10,8 +10,7 @@
  <ul>
   <li><strong>Order </strong>{{ order.order_date }}</li>
   <li><strong>User </strong>{{ order.user }}</li>
-  <li><strong>Price </strong>{{ order.total_price }} €</li>
- </ul>
+   </ul>
 {% if order.product %}
 <div class="container" style="padding-top: 20px; padding-left: 20px">
   <h4></h4>
@@ -21,7 +20,7 @@
           <thead>
             <tr>
               <th>Product</th>
-              <th>Options</th>
+              <th>Price</th>
               <th>Quantity</th>
               <th>Options</th>
 
@@ -31,7 +30,7 @@
 
   <tr>
                 <td>{{ order.product.name }}</td>
-                <td>{{ order.product.price }} €</td>
+                <td>{{ order.price }} €</td>
                 <td>{{ order.quantity }}</td>
 <td>
 

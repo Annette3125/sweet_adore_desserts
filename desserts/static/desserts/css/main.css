@@ -11,21 +11,21 @@ a {
 }
 
 .card-img-top {
-    max-width: 100%;  /* Užtikrina, kad paveikslėlis nebus didesnis nei kortelė */
-    height: auto;  /* Išlaiko proporcijas */
-    object-fit: cover; /* Apkarpo per didelius paveikslėlius */
+    max-width: 100%;  /* ensures that the image does nor exceed the card size */
+    height: auto;  /* maintain aspect ratio */
+    object-fit: cover; /* Crops over sized images */
 }
 
 .cards-container {
   display: flex;
-  gap: 20px; /* Tarpas tarp kortelių */
-  flex-wrap: wrap; /* Kortelės persikelia į kitą eilutę, jei netelpa */
-  justify-content: center; /* Centruoja korteles lange */
+  gap: 20px; /* Space between cards */
+  flex-wrap: wrap; /* Cards move to the next row if they don't fit */
+  justify-content: center; /* Centers the cards in the window */
 }
 
 .card {
-    border: 4px solid #B69E8B; /* Rėmelio storis, stilius ir spalva */
-    border-radius: 10px; /* Užapvalinti kampai */
+    border: 4px solid #B69E8B; /* Frame thickness, style and color */
+    border-radius: 10px; /* Rounded corners */
 }
 
 .banner{
@@ -146,55 +146,57 @@ footer {
 #stars
 
 .rating__icon {
-    font-size: 24px; /* Padidinsime žvaigždutes, kad jos būtų gražesnės ir lengviau matomos */
-    color: #FF69B4; /* Pilkos spalvos žvaigždutės, kai jos nėra užpildytos */
-    transition: color 0.3s, transform 0.3s; /* Sklandus spalvos ir transformacijos perėjimas */
+    font-size: 24px; /*
+We will enlarge the stars to make them more beautiful and easier to see.*/
+    color: #FF69B4; /* Gray stars when not filled */
+    transition: color 0.3s, transform 0.3s; /* Smooth color and transformation transition */
     border: 1px solid transparent;
     border-radius: 50%;
     padding: 3px;
 }
 
 .rating__input {
-    display: none; /* Slėpti žvaigždutes, kad tik etiketės veiktų kaip paspaudimo elementai */
+    display: none; /* Hide stars so that only labels act as clickable elements */
 }
 
-/* Užpildytos žvaigždutės, kai jos pažymėtos */
+/* Filled stars when marked */
 .rating__input:checked ~ .rating__label .rating__icon {
-    color: #FF69B4; /* Auksinės spalvos žvaigždės */
+    color: #FF69B4; /* Gold stars */
 }
 
-/* Keičiasi spalva užvedus pelę ant žvaigždės */
+/* KChanges color when you hover your mouse over a star */
 .rating__label:hover .rating__icon {
-    color: #ffb300; /* Ryškesnė auksinė užvedus pelę */
+    color: #ffb300; /* Brighter gold on mouseover */
 }
 
-/* Tiesiog paspaudus ant žvaigždutės, jos taps auksinės */
-.stars-container .rating__label:hover~.rating__label .rating__icon {
-    color: #ffd700; /* Užpildytos žvaigždutės po paspaudimo */
+/* Just click on the stars and they will turn golden */
+.stars-container label:hover i,
+.stars-container input:checked ~ label i {
+    color: #ffd700 !important; /* Filled stars */
 }
 
-.stars-container .rating__input:checked~.rating__label .rating__icon {
-    color: #ffd700; /* Užpildytos žvaigždutės po paspaudimo */
-}
-
-/* Atnaujinta apžvalga, žvaigždės nebesikartojančios po komentarais */
+/* Updated review, stars no longer repeated under comments */
 .comment_rating .rating__icon {
     font-size: 18px;
-    color: #ffd700; /* Nustatome žvaigždes komentaruose, kad jos būtų matomos */
+    color: #ffd700; /* We set stars in comments so they are visible */
 }
 
-/* Įvertinimo žvaigždutės pagal vidutinį įvertinimą */
+/* Rating stars based on average rating */
 .meta .rating__icon {
     font-size: 16px;
-    color: #ffd700; /* Žvaigždutės vidiniame įvertinime */
+    color: #ffd700; /* Stars in the internal rating*/
 }
 
-/* Būtent, kai peržiūri komentarus, žvaigždutės turi būti žvaigždžių tipo */
+/* Namely, when viewing comments, the stars must be of the star type */
 .stars-container {
-    direction: ltr;
     display: flex;
-    flex-direction: row;
-    align-items: flex-end;
+    justify-content: flex-start;
+}
+.rating__input {
+    display: none; /* Hide radio button */
+}
+.rating__label {
+    cursor: pointer;
 }
 
 
@@ -202,16 +204,17 @@ footer {
 
 
 .btn-pink {
-    background-color: #FFC0CB !important; /* Švelniai rožinė spalva */
-    color: white !important; /* Baltas tekstas */
-    border: 2px solid #FF69B4; /* Šiek tiek tamsesnis rožinis rėmelis */
-    padding: 10px 20px; /* Didesnis mygtukas */
-    border-radius: 5px; /* Užapvalinti kampai */
+    background-color: #FFC0CB !important; /* Gentle pink color */
+    color: white !important; /* White text*/
+    border: 2px solid #FF69B4; /* Slightly darker pink frame*/
+    padding: 10px 20px; /* Bigger button  */
+    border-radius: 5px; /* Rounded corner */
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
 }
 
 .btn-pink:hover {
-    background-color: #FF69B4 !important; /* Ryškesnė rožinė užvedus pelę */
+    background-color: #FF69B4 !important; /* Brighter pink mouseover */
 }
+
