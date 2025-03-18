@@ -10,7 +10,8 @@
         <div class="row">
             <!-- Text on the left -->
             <div class="col-md-6">
-                <h2>The perfect Cake Pops!</h2>
+                <h2>Cake Pops!</h2>
+                <h3><i>The perfect Cake Pops!</i></h3>
                 <ul>
                     {% for cake_pop in cake_pops %}
                         <li><a href="{% url 'cake_pops_details' cake_pop.pk %}">{{ cake_pop.name }}</a></li>
