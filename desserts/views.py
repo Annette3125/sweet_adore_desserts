@@ -1,12 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Avg
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect
-from django.views import generic
+from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views import generic
 
 from .forms import OrderForm, ProductRatingForm
-from .models import Option, Product, Cocktail, Order, GalleryCategory, GalleryImage, ProductRating, Contact
+from .models import (Cocktail, Contact, GalleryCategory, GalleryImage, Option,
+                     Order, Product, ProductRating)
 
 
 def index(request):
@@ -108,9 +110,11 @@ class CakeDetailView(generic.edit.FormMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["form"] = ProductRatingForm()
         context["image_url"] = self.object.image.url if self.object.image else None
         context["ratings"] = self.object.ratings.all()
-        context["average_rating"] = self.object.average_rating
+        # context["average_rating"] = self.object.average_rating
+        context["average_rating"] = self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
         return context
 
 class CookiesListView(generic.ListView):
@@ -138,7 +142,9 @@ class CookiesDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["form"] = ProductRatingForm()
         context["image_url"] = self.object.image.url if self.object.image else None
+        context["average_rating"] = self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
         return context
 
 
@@ -165,6 +171,14 @@ class CakePopsDetailView(generic.DetailView):
     template_name = "desserts/cake_pops_details.html"
     model = Product
     context_object_name = "cake_pops"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = ProductRatingForm()
+        context["image_url"] = self.object.image.url if self.object.image else None
+        # context["average_rating"] = self.object.average_rating
+        context["average_rating"] = self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
+        return context
 
 
 class OrdersListView(LoginRequiredMixin, generic.ListView):
