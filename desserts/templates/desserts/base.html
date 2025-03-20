@@ -137,10 +137,20 @@
 <div class="spinner-border text-info" role="status">
     <span class="visually-hidden">Loading...</span>
 </div>
-<footer>&copy; Rugile's desserts 2025
+<footer style="display: flex; align-items: center; justify-content: center; gap: 20px; padding: 10px; position: relative;">
+
+
+    <div style="display: flex; align-items: center; gap: 5px;">
+      <span>&copy; Rugile's desserts 2025</span>
     <div class="heart medium"></div>
     <div class="heart small"></div>
     <div class="heart medium"></div>
+  <!-- Facebook svg -->
+        <a href="https://www.facebook.com/profile.php?id=100025026853032&locale=lt_LT" target="_blank" style="position: absolute; right: 10px;">
+            <img src="{% static 'desserts/img/facebook1.svg' %}" alt="Facebook" width="30">
+        </a>
+</div>
+
 </footer>
 <!-- Custom JavaScript -->
 <script src="{% static 'desserts/js/main.js' %}"></script>
