@@ -87,14 +87,14 @@ class Order(models.Model):
     IN_PROGRESS = "P"
     COMPLETED = "C"
     DELIVERED = "D"
-    ORDER_STATUSES = {
-        NEW: "New",
-        IN_PROGRESS: "In Progress",
-        COMPLETED: "Completed",
-        DELIVERED: "Delivered",
-    }
+    ORDER_STATUSES = [
+        (NEW, "New"),
+        (IN_PROGRESS, "In Progress"),
+        (COMPLETED, "Completed"),
+        (DELIVERED, "Delivered"),
+    ]
     status = models.CharField(
-        max_length=1, choices=ORDER_STATUSES, default="NEW", blank=True
+        max_length=1, choices=ORDER_STATUSES, default="N", blank=True
     )
 
     class Meta:

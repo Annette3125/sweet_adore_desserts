@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+
 import sys
 from pathlib import Path
 
@@ -91,8 +92,12 @@ WSGI_APPLICATION = "sweet_adore_desserts.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "sweet_adore_desserts.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "dessertsdb",
+        "USER": "aneta",
+        "PASSWORD": "mypassword",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
