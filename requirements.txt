@@ -15,9 +15,10 @@ packaging==24.2
 pathspec==0.12.1
 pillow==11.1.0
 platformdirs==4.3.6
-psycopg2-binary==2.9.10
+psycopg==3.2.6
 PyJWT==2.10.1
 python-dotenv==1.0.1
 pytz==2024.2
 sqlparse==0.5.3
+typing_extensions==4.12.2
 tzdata==2024.2
