@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm, HiddenInput
+from django.forms import ModelForm, HiddenInput, DateInput
 from .models import Option, Category, Product, Order, ProductRating
 
 
@@ -19,11 +19,15 @@ class ProductForm(ModelForm):
         fields = "__all__"
 
 
+class DateTimeInput(DateInput):
+    input_type = "datetime-local"
+
+
 class OrderForm(ModelForm):
     class Meta:
         model = Order
         fields = ["user", "deadline", "options", "product", "quantity"]
-        widgets = {"user": HiddenInput()}
+        widgets = {"user": HiddenInput(), "deadline": DateTimeInput()}
 
 
 REVIEW_CHOICES = [
