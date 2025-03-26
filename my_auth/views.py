@@ -1,13 +1,14 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
+from django.views.generic import ListView
 
-from .forms import UserCreationForm, UserUpdateForm, ProfileUpdateForm
-
+from .forms import ProfileUpdateForm, UserCreationForm, UserUpdateForm
+from .models import Profile
 
 
 @csrf_protect
@@ -50,3 +51,13 @@ def profile(request):
         profile_form = ProfileUpdateForm(instance=request.user.profile)
     context = {"user_form": user_form, "profile_form": profile_form}
     return render(request, "desserts/profile.html", context=context)
+
+
+class CakeBuddyListView(ListView):
+    model = Profile
+    template_name = "desserts/dessertbuddy.html"
+    context_object_name = "profiles"
+
+    def get_queryset(self):
+        # return profiles which has filled bio
+        return Profile.objects.exclude(bio="")

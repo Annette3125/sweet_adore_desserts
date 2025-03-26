@@ -14,6 +14,10 @@
                  alt="No Image Available">
         {% endif %}
 
+{% if profile.bio %}
+    <p><strong>{{ profile.user.username }}</strong>: "{{ profile.bio }}"</p>
+{% endif %}
+
 
         <div class="media-body">
           <h2 class="account-heading">{{ user.profile.name }}</h2>

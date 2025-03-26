@@ -7,4 +7,5 @@ urlpatterns = [
     path("complete/", views.register_complete, name="register_complete"),
     path("register/", views.register, name="register"),
     path("profile/", views.profile, name="profile"),
+    path("dessertbuddy/", views.CakeBuddyListView.as_view(), name="dessertbuddy"),
 ]
