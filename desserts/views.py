@@ -65,7 +65,6 @@ class CakesOptionListView(generic.ListView):
         return context
 
 
-
 class CakeListView(generic.DetailView):
     template_name = "desserts/cakes.html"
     model = Option
@@ -195,6 +194,11 @@ class OrderDetailView(generic.DetailView):
     model = Order
     template_name = "desserts/order_details.html"
     context_object_name = "order"
+
+    # def get_context_data(self, ** kwargs):  # for editing order if exact user is user. need to create update
+    #     context = super().get_context_data(**kwargs)
+    #     context["can_user_edit_order"] = self.object.user == self.request.user
+    #     return context
 
 
 def rating_view(request):
