@@ -49,6 +49,10 @@ class GalleryImageAdmin(admin.ModelAdmin):
     list_display = ["image_category", "name"]
     list_filter = ["image_category", "name"]
 
+class ProductRatingAdmin(admin.ModelAdmin):
+    model = ProductRating
+    list_display = ["product", "score", "author", "date", "text"]
+
 
 admin.site.register(Option, OptionAdmin)
 admin.site.register(Category, CategoryAdmin)
@@ -57,5 +61,5 @@ admin.site.register(Order, OrderAdmin)
 admin.site.register(Cocktail, CocktailAdmin)
 admin.site.register(GalleryImage, GalleryImageAdmin)
 admin.site.register(GalleryCategory, GalleryCategoryAdmin)
-admin.site.register(ProductRating)
+admin.site.register(ProductRating, ProductRatingAdmin)
 admin.site.register(Contact)
