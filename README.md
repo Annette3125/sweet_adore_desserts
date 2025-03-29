@@ -1,4 +1,5 @@
 ![Sweet adore desserts logo](docs/static/desserts_logo_for_readme.jpg) ![Sweet adore desserts logo2](docs/static/main_logo_for_readme.jpg)
+
 # Sweet Adore Desserts
 
 
@@ -76,7 +77,7 @@ with deadlines. Django aims to follow Python’s
 It ships with a variety of extra, optional tools that solve 
 common web development problems.
 
-[Bootsrap v5](https://getbootstrap.com/) - 
+[Bootsrap v5.3](https://getbootstrap.com/) - 
 powerful, extensible, and feature-packed frontend toolkit.
 
 [Django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/) -  
@@ -86,9 +87,10 @@ forms have never been this crispy.
 rich text editor to our app – in just a few lines of code.
 
 
-[Django-environ](https://pypi.org/project/django-environ/) - it reads key-value pairs from a .env file and can set them as environment variables.
+[Django-environ](https://pypi.org/project/django-environ/) 
+- it reads key-value pairs from 
+a .env file and can set them as environment variables.
 It helps in the development of applications following the 
-
 [12-factor](https://12factor.net/)
 For the full list of software dependencies see 
 [requirements.txt](https://github.com/Annette3125/sweet_adore_desserts/blob/main/requirements.txt).
