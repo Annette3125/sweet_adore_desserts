@@ -17,7 +17,12 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     name = models.CharField(max_length=150, blank=True)
     photo = models.ImageField(upload_to="desserts/profile.pics", blank=True, null=True)
-    bio = models.TextField("about", max_length=300, blank=True)
+    bio = models.TextField(
+        "about",
+        max_length=300,
+        blank=True,
+        help_text="*Write something sweet or funny about desserts. This text will be displayed publicly on the 'Dessert Buddies' page."
+    )
 
     def __str__(self):
         return f"{self.user.username} Profile"
