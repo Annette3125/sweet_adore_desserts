@@ -162,7 +162,7 @@ class CakePopsListView(generic.ListView):
             context["gallery_images"] = GalleryImage.objects.filter(image_category=cake_pops_category)
         else:
             context["gallery_images"] = []
-        print("Gallery Images:", context["gallery_images"])  # Check if there is data in the terminal
+        # print("Gallery Images:", context["gallery_images"])  # Check if there is data in the terminal
         return context
 
 
@@ -232,3 +232,10 @@ def rate_product(request, product_id):
 def contacts(request):
     contact = Contact.objects.first()
     return render(request, "desserts/contacts.html", {"contact": contact})
+
+
+
+
+
+def privacy_policy(request):
+    return render(request, 'desserts/privacy_policy.html')

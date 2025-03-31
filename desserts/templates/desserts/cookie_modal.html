@@ -1,0 +1,57 @@
+<div id="cookieModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">We value your privacy</h5>
+      </div>
+      <div class="modal-body">
+        <p>We use cookies to ensure the best experience. By clicking “I agree”, you accept our cookie policy.</p>
+        <p>Read more in our <a href="{% url 'privacy_policy' %}" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="rejectCookies">I decline</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="acceptCookies">I agree</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+
+    // Jei nėra cookiesAccepted slapuko – rodom modalą
+    if(getCookie('cookiesAccepted') === null){
+      $('#cookieModal').modal('show');
+    }
+
+    $('#acceptCookies').on('click', function(){
+      setCookie('cookiesAccepted', 'true', 365);
+    });
+
+    $('#rejectCookies').on('click', function(){
+      setCookie('cookiesAccepted', 'false', 365);
+    });
+  });
+
+
+</script>

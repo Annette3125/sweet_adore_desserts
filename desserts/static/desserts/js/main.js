@@ -1,1 +1,1 @@
-console.log("Checking if JavaScript code works!");
+console.log("Checking if JavaScript code works!")

@@ -16,7 +16,8 @@ urlpatterns = [
     path("cake_pops/<int:pk>/", views.CakePopsDetailView.as_view(), name="cake_pops_details"),
     path("rating_view/", views.rating_view, name="rating_view"),
     path("rate_product/<int:product_id>/", views.rate_product, name="rate_product"),
-    path("contacts/", views.contacts, name="contacts")
+    path("contacts/", views.contacts, name="contacts"),
+    path('privacy/', views.privacy_policy, name='privacy_policy'),
 
 ]
 

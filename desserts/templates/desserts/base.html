@@ -9,23 +9,22 @@
 
     <link rel="icon" href="{% static 'desserts/img/favicon.ico' %}" type="image/x-icon"/>
 
-        <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous"
     />
-     <!-- Title (shown on the browser tab) -->
+    <!-- Title (shown on the browser tab) -->
     <title>{% block title %}{% endblock %}</title>
 </head>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'desserts/css/main.css' %}"/>
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'desserts/css/main.css' %}"/>
 
-    <!-- Add icon library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <body>
@@ -50,93 +49,92 @@
             <ul class="navbar-nav">
 
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="{% url 'cake_options' %}">Cakes</a>
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+                    <ul class="dropdown-menu">
+                        {% for cake in all_cakes %}
+                        <li><a class="dropdown-item" href="{% url 'cakes' cake.id %}">{{ cake.name }}</a></li>
+                        {% empty %}
+                        <li class="dropdown-item">No cakes available</li>
+                        {% endfor %}
+                    </ul>
+                </li>
 
 
-     <li class="nav-item dropdown">
-         <a class="nav-link" href="{% url 'cake_options' %}" >Cakes</a>
-   <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cookies' %}">Cookies</a>
+                </li>
 
-   <ul class="dropdown-menu">
-       {% for cake in all_cakes %}
-           <li><a class="dropdown-item" href="{% url 'cakes' cake.id %}">{{ cake.name }}</a></li>
-       {% empty %}
-           <li class="dropdown-item">No cakes available</li>
-       {% endfor %}
-   </ul>
-</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cake_pops' %}">Cake Pops</a>
+                </li>
 
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'cookies' %}">Cookies</a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacts' %}">Contacts</a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'cake_pops' %}">Cake Pops</a>
-        </li>
-
-
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'contacts' %}">Contacts</a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'dessertbuddy' %}"> 🍰 Dessert Buddies</a>
-        </li>
-
-        {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dessertbuddy' %}"> 🍰 Dessert Buddies</a>
+                </li>
 
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'orders' %}">Orders</a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'create_order' %}">Create Order</a>
+                </li>
 
 
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'create_order' %}">Create Order</a>
-        </li>
+                {% if user.is_authenticated %}
 
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-            {% endif %}
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'orders' %}">Orders</a>
+                </li>
 
-        <li class="nav-item">
-            <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="nav-link btn btn-link">Sign out</button>
-            </form>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="25"
-                        height="25"
-                        fill="currentColor"
-                        class="bi bi-person-circle"
-                        viewBox="0 0 16 16"
-                >
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
-                    <path
-                            fill-rule="evenodd"
-                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    {% endif %}
+                </li>
+
+                <li class="nav-item">
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link">Sign out</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="25"
+                                height="25"
+                                fill="currentColor"
+                                class="bi bi-person-circle"
+                                viewBox="0 0 16 16"
+                        >
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+                            <path
+                                    fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226
                                          4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
-                    ></path>
-                </svg>
-                {{ user.get_username }}
-            </a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Sign in</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">Sign up</a>
-        </li>
-        {% endif %}
-        </ul>
-    </div>
+                            ></path>
+                        </svg>
+                        {{ user.get_username }}
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Sign in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Sign up</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>
 <div class="container main-content" style="padding-top: 30px">
@@ -144,16 +142,21 @@
     {% for message in messages %}
     <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}"
          role="alert">
-        {{ msg|safe }}
+        {{ message|safe }}
     </div>
     {% endfor %}
     {% endif %}
+
+
+    {% include 'desserts/cookie_modal.html' %}
+
+
     {% block content %}
     {% endblock content %}
 </div>
 
 
-<footer style="display: flex; align-items: center; justify-content: center; gap: 20 px; padding: 10px;">
+<footer style="display: flex; align-items: center; justify-content: center; gap: 20px; padding: 10px;">
     <div style="display: flex; align-items: center; gap: 5px;">
         <span>&copy; Rugile's desserts 2025</span>
         <div class="heart medium"></div>
@@ -167,13 +170,22 @@
     </div>
 
 </footer>
+
+<!-- Custom jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- Custom JavaScript -->
 <script src="{% static 'desserts/js/main.js' %}"></script>
+
+
 <!-- Bootstrap JavaScript -->
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"
 ></script>
+
+    {% include 'desserts/cookie_modal.html' %}
+
 </body>
 </html>
