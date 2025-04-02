@@ -1,19 +1,23 @@
 <div id="cookieModal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
+   <div class="modal-content custom-cookie-modal">
       <div class="modal-header">
         <h5 class="modal-title">We value your privacy</h5>
       </div>
       <div class="modal-body">
-        <p>We use cookies to ensure the best experience. By clicking “I agree”, you accept our cookie policy.</p>
-        <p>Read more in our <a href="{% url 'privacy_policy' %}" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
+     <p>
+  We use cookies to improve your browsing experience, analyze site usage, and support basic website functionality.
+  By clicking “I agree”, you consent to the use of cookies as described in our
+  <a href="{% url 'privacy_policy' %}" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+</p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="rejectCookies">I decline</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="acceptCookies">I agree</button>
+        <div class="modal-footer border-0 d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" id="declineCookies">Decline</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="onlyNecessary">Only necessary</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="acceptAllCookies">I agree</button>
+      </div>
       </div>
     </div>
-  </div>
 </div>
 
 <script>
@@ -39,19 +43,23 @@
       return null;
     }
 
-    // Jei nėra cookiesAccepted slapuko – rodom modalą
+   // Jei nėra cookiesAccepted – rodom modalą
     if(getCookie('cookiesAccepted') === null){
       $('#cookieModal').modal('show');
     }
 
-    $('#acceptCookies').on('click', function(){
-      setCookie('cookiesAccepted', 'true', 365);
+    $('#acceptAllCookies').on('click', function(){
+      setCookie('cookiesAccepted', 'all', 365);
     });
 
-    $('#rejectCookies').on('click', function(){
-      setCookie('cookiesAccepted', 'false', 365);
+    $('#onlyNecessary').on('click', function(){
+      setCookie('cookiesAccepted', 'necessary', 365);
+    });
+
+    $('#declineCookies').on('click', function(){
+      setCookie('cookiesAccepted', 'declined', 365);
     });
   });
-
+</script>
 
 </script>

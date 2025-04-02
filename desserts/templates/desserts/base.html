@@ -148,9 +148,6 @@
     {% endif %}
 
 
-    {% include 'desserts/cookie_modal.html' %}
-
-
     {% block content %}
     {% endblock content %}
 </div>
@@ -168,7 +165,11 @@
             <img src="{% static 'desserts/img/facebook1.svg' %}" alt="Facebook" width="30">
         </a>
     </div>
-
+  <div style="margin-top: 8px;">
+    <a href="{% url 'privacy_policy' %}" style="font-size: 14px; color: gray; text-decoration: none;">
+      Privacy Policy
+    </a>
+  </div>
 </footer>
 
 <!-- Custom jQuery -->
