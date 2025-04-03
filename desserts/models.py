@@ -68,7 +68,7 @@ class Product(models.Model):
 class Order(models.Model):
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    deadline = models.DateTimeField(verbose_name="Deadline", null=True, blank=True)
+    deadline = models.DateTimeField(verbose_name="Deadline", null=True, blank=False)
     options = models.ManyToManyField(
         Option,
         blank=False,
