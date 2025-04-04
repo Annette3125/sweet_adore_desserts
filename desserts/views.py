@@ -1,10 +1,16 @@
+from io import BytesIO
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import EmailMessage
 from django.db.models import Avg
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import generic
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 from .forms import OrderForm, ProductRatingForm
 from .models import (Cocktail, Contact, GalleryCategory, GalleryImage, Option,
@@ -20,16 +26,41 @@ def index(request):
 
     homepage_category = GalleryCategory.objects.filter(name="Homepage").first()
 
-    gallery_images = GalleryImage.objects.filter(image_category=homepage_category) if homepage_category else []
+    gallery_images = (
+        GalleryImage.objects.filter(image_category=homepage_category)
+        if homepage_category
+        else []
+    )
 
-    context = {"num_cakes": num_cakes,
-               "num_cookies": num_cookies,
-               "num_cake_pops": num_cake_pops,
-               "num_cocktails_recipes": num_cocktails_recipes,
-               "gallery_images": gallery_images
-               }
+    context = {
+        "num_cakes": num_cakes,
+        "num_cookies": num_cookies,
+        "num_cake_pops": num_cake_pops,
+        "num_cocktails_recipes": num_cocktails_recipes,
+        "gallery_images": gallery_images,
+    }
 
     return render(request, "desserts/index.html", context=context)
+
+
+def send_invoice_email(order):
+    # Sugeneruojame sąskaitą
+    pdf_buffer = generate_invoice(order)
+
+    # create email
+    email = EmailMessage(
+        subject=f"Your Order Invoice - {order.id}",
+        body=f"Dear {order.user.username},\n\nPlease find your invoice attached.",
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[order.user.email],
+    )
+
+    # Pridedame PDF priedą
+    email.attach(f"invoice_{order.id}.pdf", pdf_buffer.read(), "application/pdf")
+
+    # Siunčiame el. paštą
+    email.send()
+
 
 @login_required
 def create_order(request):
@@ -40,6 +71,10 @@ def create_order(request):
             order.user = request.user
             order.save()
             form.save_m2m()
+
+            # after created order send invoice by email
+            send_invoice_email(order)
+
             return HttpResponseRedirect(reverse("create_order"))
     else:
         form = OrderForm()
@@ -48,18 +83,35 @@ def create_order(request):
     return render(request, "desserts/generic_form.html", context)
 
 
+def generate_invoice(order):
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=letter)
+    c.drawString(100, 750, f"Order Invoice - {order.id}")
+    c.drawString(100, 730, f"User: {order.user.username}")
+    c.drawString(100, 710, f"Order Date: {order.order_date}")
+    c.drawString(100, 690, f"Product: {order.product.name}")
+    c.drawString(100, 670, f"Quantity: {order.quantity}")
+    c.drawString(100, 650, f"Price: {order.price} EUR")
+    c.showPage()
+    c.save()
+
+    buffer.seek(0)
+    return buffer
+
+
 class CakesOptionListView(generic.ListView):
     template_name = "desserts/cakes_option.html"
     model = Option
     context_object_name = "options"
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # We get all the photos in the gallery that belong to the "Cakes" category
         cake_category = GalleryCategory.objects.filter(name="Cakes").first()
         if cake_category:
-            context["gallery_images"] = GalleryImage.objects.filter(image_category=cake_category)
+            context["gallery_images"] = GalleryImage.objects.filter(
+                image_category=cake_category
+            )
         else:
             context["gallery_images"] = []
         return context
@@ -84,9 +136,8 @@ class CakeDetailView(generic.edit.FormMixin, generic.DetailView):
     context_object_name = "cake"
     form_class = ProductRatingForm
 
-
     def get_success_url(self):
-        return reverse('cake_details', kwargs={'pk': self.object.id})
+        return reverse("cake_details", kwargs={"pk": self.object.id})
 
     # Standard post method override using FormMixin, can be copied directly
     # to our project.
@@ -106,15 +157,17 @@ class CakeDetailView(generic.edit.FormMixin, generic.DetailView):
         form.save()
         return super(CakeDetailView, self).form_valid(form)
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = ProductRatingForm()
         context["image_url"] = self.object.image.url if self.object.image else None
         context["ratings"] = self.object.ratings.all()
         # context["average_rating"] = self.object.average_rating
-        context["average_rating"] = self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
+        context["average_rating"] = (
+            self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
+        )
         return context
+
 
 class CookiesListView(generic.ListView):
     template_name = "desserts/cookies.html"
@@ -128,11 +181,13 @@ class CookiesListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         cookies_category = GalleryCategory.objects.filter(name="Cookies").first()
         if cookies_category:
-            context["gallery_images"] = GalleryImage.objects.filter(image_category=cookies_category)
+            context["gallery_images"] = GalleryImage.objects.filter(
+                image_category=cookies_category
+            )
         else:
             context["gallery_images"] = []
-        print("Gallery Images:", context["gallery_images"])  # Check if there is data in the terminal
         return context
+
 
 class CookiesDetailView(generic.DetailView):
     template_name = "desserts/cookies_details.html"
@@ -143,7 +198,9 @@ class CookiesDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context["form"] = ProductRatingForm()
         context["image_url"] = self.object.image.url if self.object.image else None
-        context["average_rating"] = self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
+        context["average_rating"] = (
+            self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
+        )
         return context
 
 
@@ -159,10 +216,11 @@ class CakePopsListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         cake_pops_category = GalleryCategory.objects.filter(name="Cake Pops").first()
         if cake_pops_category:
-            context["gallery_images"] = GalleryImage.objects.filter(image_category=cake_pops_category)
+            context["gallery_images"] = GalleryImage.objects.filter(
+                image_category=cake_pops_category
+            )
         else:
             context["gallery_images"] = []
-        # print("Gallery Images:", context["gallery_images"])  # Check if there is data in the terminal
         return context
 
 
@@ -175,8 +233,9 @@ class CakePopsDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context["form"] = ProductRatingForm()
         context["image_url"] = self.object.image.url if self.object.image else None
-        # context["average_rating"] = self.object.average_rating
-        context["average_rating"] = self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
+        context["average_rating"] = (
+            self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
+        )
         return context
 
 
@@ -190,43 +249,28 @@ class OrdersListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user).order_by("id")
 
+
 class OrderDetailView(generic.DetailView):
     model = Order
     template_name = "desserts/order_details.html"
     context_object_name = "order"
 
-    # def get_context_data(self, ** kwargs):  # for editing order if exact user is user. need to create update
-    #     context = super().get_context_data(**kwargs)
-    #     context["can_user_edit_order"] = self.object.user == self.request.user
-    #     return context
-
-
-def rating_view(request):
-    obj = ProductRating.objects.filter(score=0).order_by("?").first()
-    context ={
-        'object': obj
-    }
-    return render(request, "desserts/ratings.html", context)
-
 
 def rate_product(request, product_id):
-    if request.method == 'POST':
+    if request.method == "POST":
         val = request.POST.get("score")
         text = request.POST.get("text")
         product = Product.objects.get(id=product_id)
 
-        # Sukuriamas naujas įvertinimas
+        # new rating - assessment created
         rating = ProductRating.objects.create(
-            product=product,
-            score=val,
-            author=request.user,
-            text=text
+            product=product, score=val, author=request.user, text=text
         )
         rating.save()
 
         # Returns page with updated rating
-        return redirect('cake_details', pk=product.id)
-    return JsonResponse({'success':'false'})
+        return redirect("cake_details", pk=product.id)
+    return JsonResponse({"success": "false"})
 
 
 def contacts(request):
@@ -234,8 +278,5 @@ def contacts(request):
     return render(request, "desserts/contacts.html", {"contact": contact})
 
 
-
-
-
 def privacy_policy(request):
-    return render(request, 'desserts/privacy_policy.html')
+    return render(request, "desserts/privacy_policy.html")
