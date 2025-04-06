@@ -5,7 +5,6 @@ from PIL import Image
 from rest_framework.exceptions import ValidationError
 from tinymce.models import HTMLField
 
-
 from my_auth.models import User
 
 
@@ -46,7 +45,7 @@ class Product(models.Model):
         verbose_name_plural = "Products"
 
     def __str__(self):
-        return f"{self.name} {self.price} € {self.category.name} {self.options.name}"
+        return f"{self.name} {self.price} € {self.category.name}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -62,8 +61,9 @@ class Product(models.Model):
 
     @property
     def average_rating(self):
-        avg = self.ratings.aggregate(Avg('score'))['score__avg']
+        avg = self.ratings.aggregate(Avg("score"))["score__avg"]
         return round(avg, 1) if avg else 0
+
 
 class Order(models.Model):
     order_date = models.DateTimeField(blank=False, null=False, auto_now_add=True)
@@ -79,9 +79,8 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         blank=False,
         null=True,
-       )
+    )
     quantity = models.IntegerField(blank=True, null=False, default=1)
-
 
     NEW = "N"
     IN_PROGRESS = "P"
@@ -101,10 +100,11 @@ class Order(models.Model):
         verbose_name = "Order"
         verbose_name_plural = "Orders"
 
-
     def __str__(self):
-        return (f" Order date: {self.order_date} {self.user} {self.price} €, Return date: {self.deadline}"
-                f"qty: {self.quantity} {self.product}")
+        return (
+            f" Order date: {self.order_date} {self.user} {self.price} €, Return date: {self.deadline}"
+            f"qty: {self.quantity} {self.product}"
+        )
 
     @property
     def price(self):
@@ -164,15 +164,14 @@ class ProductRating(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     text = models.TextField(null=False, blank=True, max_length=2000)
 
-
     def clean_score(self):
         if self.score < 1 or self.score > 5:
             raise ValidationError("Score must be between 1 and 5.")
         return self.score
 
-
     def __str__(self):
         return f" {self.author.username} - {self.product}⭐"
+
 
 class Contact(models.Model):
     address = models.CharField(max_length=255)
@@ -182,4 +181,3 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.address} {self.city} {self.phone} {self.email}"
-
