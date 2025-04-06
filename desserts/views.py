@@ -44,7 +44,6 @@ def index(request):
 
 
 def send_invoice_email(order):
-    # Sugeneruojame sąskaitą
     pdf_buffer = generate_invoice(order)
 
     # create email
@@ -55,10 +54,8 @@ def send_invoice_email(order):
         to=[order.user.email],
     )
 
-    # Pridedame PDF priedą
+    # add an attachment and send an email
     email.attach(f"invoice_{order.id}.pdf", pdf_buffer.read(), "application/pdf")
-
-    # Siunčiame el. paštą
     email.send()
 
 
@@ -89,9 +86,14 @@ def generate_invoice(order):
     c.drawString(100, 750, f"Order Invoice - {order.id}")
     c.drawString(100, 730, f"User: {order.user.username}")
     c.drawString(100, 710, f"Order Date: {order.order_date}")
-    c.drawString(100, 690, f"Product: {order.product.name}")
-    c.drawString(100, 670, f"Quantity: {order.quantity}")
-    c.drawString(100, 650, f"Price: {order.price} EUR")
+    c.drawString(100, 690, f"Order Deadline: {order.deadline}")
+    c.drawString(100, 670, f"Product: {order.product.name}")
+    c.drawString(100, 650, f"Quantity: {order.quantity}")
+    c.drawString(100, 630, f"Price: {order.price} EUR")
+    c.drawString(100, 610, "Bank Name: XYZ Bank")
+    c.drawString(100, 590, "Account Number: 1234567890")
+    c.drawString(100, 570, "IBAN: LT123456789012345678")
+    c.drawString(100, 550, "SWIFT/BIC: XYZBLT22")
     c.showPage()
     c.save()
 
@@ -162,7 +164,6 @@ class CakeDetailView(generic.edit.FormMixin, generic.DetailView):
         context["form"] = ProductRatingForm()
         context["image_url"] = self.object.image.url if self.object.image else None
         context["ratings"] = self.object.ratings.all()
-        # context["average_rating"] = self.object.average_rating
         context["average_rating"] = (
             self.object.ratings.aggregate(Avg("score"))["score__avg"] or 0
         )
