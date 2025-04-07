@@ -1,10 +1,9 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Avg
 from PIL import Image
-from rest_framework.exceptions import ValidationError
 from tinymce.models import HTMLField
-
 from my_auth.models import User
 
 
