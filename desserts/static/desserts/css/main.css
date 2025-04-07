@@ -145,59 +145,62 @@ footer {
 
 #stars
 
+/* Default state for stars */
 .rating__icon {
-    font-size: 24px; /*
-We will enlarge the stars to make them more beautiful and easier to see.*/
+    font-size: 24px;
     color: #FF69B4; /* Gray stars when not filled */
-    transition: color 0.3s, transform 0.3s; /* Smooth color and transformation transition */
+    transition: color 0.3s, transform 0.3s;
     border: 1px solid transparent;
     border-radius: 50%;
     padding: 3px;
 }
 
+/* Hide input radio buttons */
 .rating__input {
-    display: none; /* Hide stars so that only labels act as clickable elements */
+    display: none;
 }
 
-/* Filled stars when marked */
+/* Change color for filled stars when checked */
 .rating__input:checked ~ .rating__label .rating__icon {
-    color: #FF69B4; /* Gold stars */
+    color: #FFD700; /* Gold stars when selected */
 }
 
-/* KChanges color when you hover your mouse over a star */
+/* Hover effect to highlight the star when hovering over it */
 .rating__label:hover .rating__icon {
     color: #ffb300; /* Brighter gold on mouseover */
 }
 
-/* Just click on the stars and they will turn golden */
-.stars-container label:hover i,
+/* Ensures the entire line of stars turn golden when clicked */
 .stars-container input:checked ~ label i {
-    color: #ffd700 !important; /* Filled stars */
+    color: #FFD700; /* Change color to gold for all previous stars */
 }
 
-/* Updated review, stars no longer repeated under comments */
-.comment_rating .rating__icon {
-    font-size: 18px;
-    color: #ffd700; /* We set stars in comments so they are visible */
+/* Ensures that all previous stars are filled when a radio button is checked */
+.rating__input:checked ~ .rating__label i {
+    color: #FFD700; /* Color all previous stars in gold */
 }
 
-/* Rating stars based on average rating */
-.meta .rating__icon {
-    font-size: 16px;
-    color: #ffd700; /* Stars in the internal rating*/
-}
-
-/* Namely, when viewing comments, the stars must be of the star type */
+/* Stars container */
 .stars-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-start; /* Aligns the stars from left to right */
 }
-.rating__input {
-    display: none; /* Hide radio button */
+
+/* Updated review for stars display */
+.comment_rating .rating__icon {
+    font-size: 18px;
+    color: #ffd700; /* Gold for review stars */
 }
-.rating__label {
-    cursor: pointer;
+
+/* Additional hover effects */
+.stars-container label:hover i,
+.stars-container input:checked ~ label:hover i {
+    color: #FFD700; /* Fill stars up to hovered one */
 }
+
+
+
+
 
 
 
