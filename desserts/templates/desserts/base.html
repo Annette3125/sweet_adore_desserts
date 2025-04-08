@@ -27,6 +27,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
@@ -78,6 +81,10 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'dessertbuddy' %}"> 🍰 Dessert Buddies</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dessert_images' %}"><i class="fas fa-cake"></i> Dessert Images</a>
                 </li>
 
 
@@ -165,11 +172,11 @@
             <img src="{% static 'desserts/img/facebook1.svg' %}" alt="Facebook" width="30">
         </a>
     </div>
-  <div style="margin-top: 8px;">
-    <a href="{% url 'privacy_policy' %}" style="font-size: 14px; color: gray; text-decoration: none;">
-      Privacy Policy
-    </a>
-  </div>
+    <div style="margin-top: 8px;">
+        <a href="{% url 'privacy_policy' %}" style="font-size: 14px; color: gray; text-decoration: none;">
+            Privacy Policy
+        </a>
+    </div>
 </footer>
 
 <!-- Custom jQuery -->
@@ -186,7 +193,7 @@
         crossorigin="anonymous"
 ></script>
 
-    {% include 'desserts/cookie_modal.html' %}
+{% include 'desserts/cookie_modal.html' %}
 
 </body>
 </html>

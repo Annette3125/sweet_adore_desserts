@@ -1,5 +1,7 @@
+import os
 from io import BytesIO
 
+import requests
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -281,3 +283,23 @@ def contacts(request):
 
 def privacy_policy(request):
     return render(request, "desserts/privacy_policy.html")
+
+
+def dessert_images(request):
+    url = "https://api.unsplash.com/search/photos"
+    access_key = os.getenv("UNSPLASH_API_KEY")
+
+    search_query = "cake"
+
+    response = requests.get(url, params={
+        "client_id": access_key,
+        "query": search_query,
+        "per_page": 10
+    })
+
+    if response.status_code == 200:
+        images = response.json()['results']
+    else:
+        images = []
+
+    return render(request, "desserts/dessert_images.html", {"images": images})

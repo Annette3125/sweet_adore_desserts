@@ -1,0 +1,27 @@
+{% extends "desserts/base.html" %}
+
+
+{% block title %}Dessert Images{% endblock %}
+
+{% block content %}
+
+
+
+    <h1>Dessert images</h1>
+    <div>
+        {% if images %}
+        {% for image in images %}
+            <div>
+                <img src="{{ image.urls.regular }}" alt="{{ image.alt_description }}" style="max-width: 80%; height: auto;">
+                <p>{{ image.alt_description }}</p>
+
+                 <p>Photo by <a href="{{ image.user.links.html }}" target="_blank">{{ image.user.name }}</a> on Unsplash</p>
+            </div>
+        {% endfor %}
+        {% else %}
+            <p>Unable to get images.</p>
+        {% endif %}
+    </div>
+
+
+{% endblock content %}

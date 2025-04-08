@@ -47,6 +47,8 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost"])
 
 
+UNSPLASH_API_KEY = os.getenv("UNSPLASH_API_KEY")
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,7 +63,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-]
+    ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

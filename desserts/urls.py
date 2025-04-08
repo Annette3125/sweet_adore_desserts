@@ -23,4 +23,5 @@ urlpatterns = [
     path("rate_product/<int:product_id>/", views.rate_product, name="rate_product"),
     path("contacts/", views.contacts, name="contacts"),
     path("privacy/", views.privacy_policy, name="privacy_policy"),
+    path('dessert_images/', views.dessert_images, name='dessert_images'),
 ]
