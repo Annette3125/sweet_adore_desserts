@@ -41,8 +41,8 @@
     {% endif %}
 
 </div>
-    <div class="pagination-container">
-        <div class="pagination pagination-sm justify-content-center">
+<div class="pagination-container">
+    <div class="pagination pagination-sm justify-content-center">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -58,7 +58,7 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-        </div>
     </div>
+</div>
 
 {% endblock content %}

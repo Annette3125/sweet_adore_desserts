@@ -6,8 +6,6 @@
 {% block content %}
 
 
-
-
 <div class="container mt-5">
     <div class="row">
         <!-- Text on the left -->
@@ -19,16 +17,16 @@
         <!-- Text on the right -->
         <div class="col-md-6 text-center">
             {% if cookies.image %}
-                <img src="{{ cookies.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ cookies.name }}">
+            <img src="{{ cookies.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ cookies.name }}">
             {% else %}
-                <img src="{% static 'desserts/img/default1.jpg' %}" class="img-fluid rounded shadow-lg" alt="No Image Available">
+            <img src="{% static 'desserts/img/default1.jpg' %}" class="img-fluid rounded shadow-lg"
+                 alt="No Image Available">
             {% endif %}
         </div>
     </div>
 </div>
 
 {% include "desserts/ratings.html" with product=cookies form=form average_rating=average_rating %}
-
 
 
 {% endblock content %}

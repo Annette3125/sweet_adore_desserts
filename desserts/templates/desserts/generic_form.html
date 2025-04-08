@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="content-section">
-<form action="{{ action_url }}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <fieldset class="form-group">
-    {{ form|crispy }}
+    <form action="{{ action_url }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {{ form|crispy }}
         </fieldset>
-    <input type="submit" class="btn btn-pink" value="Submit">
-</form>
-    </div>
+        <input type="submit" class="btn btn-pink" value="Submit">
+    </form>
+</div>
 {% endblock content %}

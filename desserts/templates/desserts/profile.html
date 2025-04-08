@@ -4,37 +4,37 @@
 {% block title %}User Profile{% endblock %}
 
 {% block content %}
-  <div class="container" style="display: inline-block; width: 70%">
+<div class="container" style="display: inline-block; width: 70%">
     <div class="content-section">
-      <div class="media">
-        {% if user.profile.photo %}
-       <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}" alt="profile-photo">
-     {% else %}
-        <img src="{% static 'desserts/img/default-profile.png.png' %}" class="img-fluid rounded shadow-lg"
+        <div class="media">
+            {% if user.profile.photo %}
+            <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}" alt="profile-photo">
+            {% else %}
+            <img src="{% static 'desserts/img/default-profile.png.png' %}" class="img-fluid rounded shadow-lg"
                  alt="No Image Available">
-        {% endif %}
+            {% endif %}
 
-{% if profile.bio %}
-    <p><strong>{{ profile.user.username }}</strong>: "{{ profile.bio }}"</p>
-{% endif %}
+            {% if profile.bio %}
+            <p><strong>{{ profile.user.username }}</strong>: "{{ profile.bio }}"</p>
+            {% endif %}
 
 
-        <div class="media-body">
-          <h2 class="account-heading">{{ user.profile.name }}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
+            <div class="media-body">
+                <h2 class="account-heading">{{ user.profile.name }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
         </div>
-      </div>
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset class="form-group">
-          <legend class="border-bottom mb-4">Profile info</legend>
-          {{ user_form|crispy }}
-          {{ profile_form|crispy }}
-        </fieldset>
-        <div class="form-group">
-          <button class="btn btn-primary" type="submit">Update</button>
-        </div>
-      </form>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile info</legend>
+                {{ user_form|crispy }}
+                {{ profile_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+        </form>
     </div>
-  </div>
+</div>
 {% endblock content %}

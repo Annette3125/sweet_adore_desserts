@@ -1,20 +1,20 @@
 {% load crispy_forms_tags %}
 
-                <div class="comment-form clearfix">
+<div class="comment-form clearfix">
     <h3><i class="fa fa-pencil"></i>Leave a Review</h3>
-                    {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
     <form method="post" action="{% url 'rate_product' product.id %}">
         {% csrf_token %}
 
 
-                     <div class="rating-group">
+        <div class="rating-group">
             <div class="stars-container">
 
 
                 <input class="rating__input" name="score" id="rating_1" value="1" type="radio" required>
                 <label class="rating__label" for="rating_1"><i class="rating__icon fa fa-star"></i></label>
 
-                    <input class="rating__input" name="score" id="rating_2" value="2" type="radio" required>
+                <input class="rating__input" name="score" id="rating_2" value="2" type="radio" required>
                 <label class="rating__label" for="rating_2"><i class="rating__icon fa fa-star"></i></label>
 
                 <input class="rating__input" name="score" id="rating_3" value="3" type="radio" required>
@@ -23,7 +23,7 @@
                 <input class="rating__input" name="score" id="rating_4" value="4" type="radio" required>
                 <label class="rating__label" for="rating_4"><i class="rating__icon fa fa-star"></i></label>
 
-                   <input class="rating__input" name="score" id="rating_5" value="5" type="radio" required>
+                <input class="rating__input" name="score" id="rating_5" value="5" type="radio" required>
                 <label class="rating__label" for="rating_5"><i class="rating__icon fa fa-star"></i></label>
             </div>
         </div>
@@ -33,33 +33,33 @@
 
         <button type="submit" class="btn btn-pink">Submit Rating</button>
     </form>
-                    {% else %}
-                    <h6>Please log in to leave a review! </h6>
-                    {% endif %}
+    {% else %}
+    <h6>Please log in to leave a review! </h6>
+    {% endif %}
 </div>
 
 <h3>Reviews</h3>
 <p><strong>Overall Rating:</strong></p>
-    <div class="stars-container">
-        {% for i in "12345" %}
-        {% if forloop.counter <= average_rating %}
-        <i class="fa fa-star text-warning"></i>  <!-- Full star -->
-        {% else %}
-        <i class="fa fa-star text-muted"></i>  <!-- Empty star -->
-        {% endif %}
-        {% endfor %}
-    </div>
+<div class="stars-container">
+    {% for i in "12345" %}
+    {% if forloop.counter <= average_rating %}
+    <i class="fa fa-star text-warning"></i>  <!-- Full star -->
+    {% else %}
+    <i class="fa fa-star text-muted"></i>  <!-- Empty star -->
+    {% endif %}
+    {% endfor %}
+</div>
 {% for rating in product.ratings.all %}
 <div class="review-box">
     <strong>{{ rating.author.username }}</strong> - {{ rating.date|date:"Y-m-d H:i" }}
 
     <p>Rating:
         {% for i in "12345" %}
-            {% if forloop.counter <= rating.score %}
-                <i class="fa fa-star text-warning"></i>  <!-- Full star -->
-            {% else %}
-                <i class="fa fa-star text-muted"></i>  <!-- Empty star -->
-            {% endif %}
+        {% if forloop.counter <= rating.score %}
+        <i class="fa fa-star text-warning"></i>  <!-- Full star -->
+        {% else %}
+        <i class="fa fa-star text-muted"></i>  <!-- Empty star -->
+        {% endif %}
         {% endfor %}
 
     </p>

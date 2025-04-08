@@ -8,22 +8,22 @@ d
 {% block content %}
 
 {% comment %}
-  {% if request.GET.next %}
-    {% if user.is_authenticated %}
-      <p>You cannot access this content, please log in with a different user.</p>
-    {% endif %}
-  {% endif %}
+{% if request.GET.next %}
+{% if user.is_authenticated %}
+<p>You cannot access this content, please log in with a different user.</p>
+{% endif %}
+{% endif %}
 {% endcomment %}
 
 
 <div class="body_login">
-  <form method="post" class="form-signup">
-    {% csrf_token %}
-    {{form|crispy}}
-    <button type="submit" class="save btn btn-pink">Sign in</button>
-  </form>
+    <form method="post" class="form-signup">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" class="save btn btn-pink">Sign in</button>
+    </form>
 </div>
-  <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+<p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
 
 {% endblock content %}
 

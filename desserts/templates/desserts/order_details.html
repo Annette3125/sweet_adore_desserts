@@ -5,49 +5,49 @@
 
 {% block content %}
 
-  <h2><strong>Order details: </strong></h2>
-  <hr />
- <ul>
-  <li><strong>Order </strong>{{ order.order_date }}</li>
-  <li><strong>User </strong>{{ order.user }}</li>
-   </ul>
+<h2><strong>Order details: </strong></h2>
+<hr/>
+<ul>
+    <li><strong>Order </strong>{{ order.order_date }}</li>
+    <li><strong>User </strong>{{ order.user }}</li>
+</ul>
 {% if order.product %}
 <div class="container" style="padding-top: 20px; padding-left: 20px">
-  <h4></h4>
+    <h4></h4>
 
 
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Options</th>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Options</th>
 
-            </tr>
+        </tr>
         </thead>
-          <tbody>
+        <tbody>
 
-  <tr>
-                <td>{{ order.product.name }}</td>
-                <td>{{ order.price }} €</td>
-                <td>{{ order.quantity }}</td>
-<td>
+        <tr>
+            <td>{{ order.product.name }}</td>
+            <td>{{ order.price }} €</td>
+            <td>{{ order.quantity }}</td>
+            <td>
 
-    {% for option in order.options.all %}
-    {{ option.name }}
-  {% if not forloop.last %}
-  {% endif %}
-    {% endfor %}
-</td>
-  </tr>
+                {% for option in order.options.all %}
+                {{ option.name }}
+                {% if not forloop.last %}
+                {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
 
-   </tbody>
+        </tbody>
     </table>
     <h4>Total: <strong>{{ order.price }} €</strong></h4>
-  </div>
+</div>
 {% else %}
-  <p>No items in this order.</p>
+<p>No items in this order.</p>
 {% endif %}
 
 {% endblock content %}

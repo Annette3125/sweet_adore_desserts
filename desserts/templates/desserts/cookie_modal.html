@@ -1,65 +1,71 @@
 <div id="cookieModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-   <div class="modal-content custom-cookie-modal">
-      <div class="modal-header">
-        <h5 class="modal-title">We value your privacy</h5>
-      </div>
-      <div class="modal-body">
-     <p>
-  We use cookies to improve your browsing experience, analyze site usage, and support basic website functionality.
-  By clicking “I agree”, you consent to the use of cookies as described in our
-  <a href="{% url 'privacy_policy' %}" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
-</p>
-      </div>
-        <div class="modal-footer border-0 d-flex justify-content-between">
-        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" id="declineCookies">Decline</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="onlyNecessary">Only necessary</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="acceptAllCookies">I agree</button>
-      </div>
-      </div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content custom-cookie-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">We value your privacy</h5>
+            </div>
+            <div class="modal-body">
+                <p>
+                    We use cookies to improve your browsing experience, analyze site usage, and support basic website
+                    functionality.
+                    By clicking “I agree”, you consent to the use of cookies as described in our
+                    <a href="{% url 'privacy_policy' %}" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+                </p>
+            </div>
+            <div class="modal-footer border-0 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" id="declineCookies">
+                    Decline
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="onlyNecessary">Only
+                    necessary
+                </button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="acceptAllCookies">I agree
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-  $(document).ready(function(){
-    function setCookie(name, value, days) {
-      var expires = "";
-      if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
-        expires = "; expires=" + date.toUTCString();
+    $(document).ready(function(){
+      function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + (days*24*60*60*1000));
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
       }
-      document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
 
-    function getCookie(name) {
-      var nameEQ = name + "=";
-      var ca = document.cookie.split(';');
-      for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
       }
-      return null;
-    }
 
-   // Jei nėra cookiesAccepted – rodom modalą
-    if(getCookie('cookiesAccepted') === null){
-      $('#cookieModal').modal('show');
-    }
+     // Jei nėra cookiesAccepted – rodom modalą
+      if(getCookie('cookiesAccepted') === null){
+        $('#cookieModal').modal('show');
+      }
 
-    $('#acceptAllCookies').on('click', function(){
-      setCookie('cookiesAccepted', 'all', 365);
+      $('#acceptAllCookies').on('click', function(){
+        setCookie('cookiesAccepted', 'all', 365);
+      });
+
+      $('#onlyNecessary').on('click', function(){
+        setCookie('cookiesAccepted', 'necessary', 365);
+      });
+
+      $('#declineCookies').on('click', function(){
+        setCookie('cookiesAccepted', 'declined', 365);
+      });
     });
-
-    $('#onlyNecessary').on('click', function(){
-      setCookie('cookiesAccepted', 'necessary', 365);
-    });
-
-    $('#declineCookies').on('click', function(){
-      setCookie('cookiesAccepted', 'declined', 365);
-    });
-  });
 </script>
 
 </script>
