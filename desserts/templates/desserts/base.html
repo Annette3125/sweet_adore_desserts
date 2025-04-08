@@ -102,9 +102,9 @@
 
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    <a class="nav-link" href="{% url 'profile' %}">Your profile</a>
                     {% endif %}
-                </li>
+
 
                 <li class="nav-item">
                     <form method="post" action="{% url 'logout' %}" style="display: inline;">
@@ -112,8 +112,15 @@
                         <button type="submit" class="nav-link btn btn-link">Sign out</button>
                     </form>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% if user.is_staff %}{% url 'admin:index' %}{% else %}#{% endif %}">
+
+                        {% if user.profile.photo %}
+                        <img src="{{ user.profile.photo.url }}" alt="User Photo" width="25" height="25"
+                             class="rounded-circle">
+                        {% else %}
+
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="25"
@@ -129,8 +136,10 @@
                                          4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
                             ></path>
                         </svg>
+                        {% endif %}
                         {{ user.get_username }}
                     </a>
+
                 </li>
                 {% else %}
                 <li class="nav-item">
