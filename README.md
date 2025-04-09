@@ -55,6 +55,7 @@ EMAIL_PORT=587
 EMAIL_HOST_USER=name@gmail.com
 EMAIL_USE_TLS=True
 EMAIL_HOST_PASSWORD=oiintrsytlvjtuta
+UNSPLASH_API_KEY=_23r28kZ-Tkjt_rpyTuT0QRfuiZqkxgJU0wDw9ZYcYs
 ```
 See also: [.env.example](.env.example)
 
