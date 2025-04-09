@@ -107,6 +107,7 @@ It helps in the development of applications following the
 For the full list of software dependencies see 
 [requirements.txt](requirements.txt).
 
+
 ### Latest releases
 
 **v1.0.0** (2025-04-10)
@@ -114,7 +115,28 @@ For the full list of software dependencies see
 
 ### API references
 
-None
+This project integrates with the
+[Unsplash API](https://unsplash.com/) to 
+retrieve high-quality images based on search queries. 
+The requests library is used to send GET requests to fetch images, 
+which are displayed on the website.
+
+- URL: https://api.unsplash.com/search/photos
+- Method: GET
+- Parameters:
+
+    - client_id: Your Unsplash API access key (stored in .env file).
+
+    - query: The search term (e.g., "cake", "dessert").
+
+    - per_page: Number of results per page (default: 10).
+  
+The API returns a list of images with their URLs 
+(e.g., urls.regular) and other metadata
+(such as description and photographer).
+
+For more information, visit the [Unsplash API Documentation](https://unsplash.com/s/photos/Unsplash-API-Documentation).
+
 
 ### [Licence](https://github.com/Annette3125/sweet_adore_desserts/blob/main/LICENCE)
 
