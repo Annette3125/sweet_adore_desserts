@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import Avg
 from PIL import Image
 from tinymce.models import HTMLField
+
 from my_auth.models import User
 
 
@@ -71,7 +72,7 @@ class Order(models.Model):
     options = models.ManyToManyField(
         Option,
         blank=False,
-        help_text="*To select more than one Option, press CTRL and left mouse key.",
+        help_text="*To select more than one Option, press CTRL and left mouse key. Choose a dessert flavor.",
     )
     product = models.ForeignKey(
         Product,

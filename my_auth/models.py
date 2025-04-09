@@ -21,7 +21,7 @@ class Profile(models.Model):
         "about",
         max_length=300,
         blank=True,
-        help_text="*Write something sweet or funny about desserts. This text will be displayed publicly on the 'Dessert Buddies' page."
+        help_text="*Write something sweet or funny about desserts. This text will be displayed publicly on the 'Dessert Buddies' page.",
     )
 
     def __str__(self):

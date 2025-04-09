@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from desserts.models import (Category, Cocktail, GalleryCategory, GalleryImage,
-                             Option, Order, Product, ProductRating, Contact)
-
+from desserts.models import (Category, Cocktail, Contact, GalleryCategory,
+                             GalleryImage, Option, Order, Product,
+                             ProductRating)
 
 
 class ProductInline(admin.TabularInline):

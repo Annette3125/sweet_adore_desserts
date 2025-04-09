@@ -1,6 +1,7 @@
 from django import forms
-from django.forms import ModelForm, HiddenInput, DateInput
-from .models import Option, Category, Product, Order, ProductRating
+from django.forms import DateInput, HiddenInput, ModelForm
+
+from .models import Category, Option, Order, Product, ProductRating
 
 
 class OptionForm(ModelForm):
@@ -8,10 +9,12 @@ class OptionForm(ModelForm):
         model = Option
         fields = "__all__"
 
+
 class CategoryForm(ModelForm):
     class Meta:
         model = Category
         fields = "__all__"
+
 
 class ProductForm(ModelForm):
     class Meta:
@@ -30,13 +33,8 @@ class OrderForm(ModelForm):
         widgets = {"user": HiddenInput(), "deadline": DateTimeInput()}
 
 
-REVIEW_CHOICES = [
-    ("1", "1"),
-    ("2", "2"),
-    ("3", "3"),
-    ("4", "4"),
-    ("5", "5")
-    ]
+REVIEW_CHOICES = [("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")]
+
 
 class ProductRatingForm(ModelForm):
     class Meta:
@@ -45,5 +43,5 @@ class ProductRatingForm(ModelForm):
         widgets = {
             "score": forms.RadioSelect(choices=REVIEW_CHOICES),
             "author": HiddenInput(),
-            "product": HiddenInput()
+            "product": HiddenInput(),
         }

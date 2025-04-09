@@ -291,14 +291,12 @@ def dessert_images(request):
 
     search_query = "cake"
 
-    response = requests.get(url, params={
-        "client_id": access_key,
-        "query": search_query,
-        "per_page": 10
-    })
+    response = requests.get(
+        url, params={"client_id": access_key, "query": search_query, "per_page": 10}
+    )
 
     if response.status_code == 200:
-        images = response.json()['results']
+        images = response.json()["results"]
     else:
         images = []
 

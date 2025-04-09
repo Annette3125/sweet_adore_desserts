@@ -30,21 +30,26 @@ def register_complete(request):
 
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'accounts/login.html'
+    success_url = reverse_lazy("login")
+    template_name = "accounts/login.html"
+
 
 @login_required
 def profile(request):
     if request.method == "POST":
         user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        profile_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.profile
+        )
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             messages.success(
                 request,
                 message="Profile of {username_bold} updated".format(
-                    username_bold=f"<strong>{request.user}</strong>"), )
+                    username_bold=f"<strong>{request.user}</strong>"
+                ),
+            )
             return redirect("profile")
     else:
         user_form = UserUpdateForm(instance=request.user)
