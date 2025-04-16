@@ -143,7 +143,7 @@ footer {
 
 
 
-#stars
+/* STARS */
 
 /* Default state for stars */
 .rating__icon {
@@ -276,3 +276,5 @@ footer {
 #acceptAllCookies:hover {
   background-color: #456495;
 }
+
+

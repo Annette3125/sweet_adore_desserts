@@ -8,9 +8,23 @@
     <!-- Favicon -->
 
     <link rel="icon" href="{% static 'desserts/img/favicon.ico' %}" type="image/x-icon"/>
+
+
+    <!-- Įkelkite icons.svg failą -->
+<object type="image/svg+xml" data="{% static 'desserts/svg/icons.svg' %}" style="display: none;"></object>
+
+
+     <!-- Dark and light mode -->
+    <link rel="stylesheet" href="{% static 'desserts/css/styles.css' %}">
+
+
   {% block dark-mode-vars %}
 <link rel="stylesheet" type="text/css" href="{% static 'admin/css/dark_mode.css' %}">
     {% endblock %}
+
+
+
+
 
 
     <!-- Bootstrap CSS -->
@@ -29,18 +43,46 @@
 
 <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
 
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 
 <body>
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- Auto icon (priklauso nuo sistemos nustatymų) -->
+  <symbol id="icon-auto" viewBox="0 0 32 32">
+    <path d="M16 0C7.16 0 0 7.16 0 16s7.16 16 16 16 16-7.16 16-16S24.84 0 16 0zm0 30C8.27 30 2 23.73 2 16S8.27 2 16 2s14 6.27 14 14-6.27 14-14 14z"></path>
+  </symbol>
+
+  <!-- Moon icon (tamsus režimas) -->
+  <symbol id="icon-moon" viewBox="0 0 32 32">
+    <path d="M19 16c0-1.1-.9-2-2-2-.55 0-1.04.23-1.41.59-.35-.72-.93-1.29-1.64-1.66-.7-.36-1.56-.47-2.39-.31-.83-.64-1.74-1.19-2.71-1.64-.96-.44-2.07-.57-3.09-.31-1.03.25-1.94.79-2.59 1.51-.65.72-1.09 1.67-1.26 2.62-.17.94-.13 1.91.11 2.81.24.89.69 1.65 1.28 2.31.58.66 1.31 1.11 2.09 1.31 1.54.32 3.16-.11 4.38-1.09 1.22-.98 2.05-2.5 2.05-4.19z"></path>
+  </symbol>
+
+  <!-- Sun icon (šviesus režimas) -->
+  <symbol id="icon-sun" viewBox="0 0 32 32">
+    <path d="M16 4a1 1 0 011 1v4a1 1 0 01-2 0V5a1 1 0 011-1zm0 18a1 1 0 011 1v4a1 1 0 01-2 0v-4a1 1 0 011-1zm8.66-9.66a1 1 0 010 1.42l-2.83 2.83a1 1 0 01-1.42-1.42l2.83-2.83a1 1 0 011.42 0zM5.66 16.66a1 1 0 010 1.42l-2.83 2.83a1 1 0 01-1.42-1.42l2.83-2.83a1 1 0 011.42 0zM26 16a1 1 0 010 2H6a1 1 0 010-2h20zm10.2-2.2a1 1 0 01-1.42 1.42L31.38 9.86a1 1 0 111.42-1.42l2.83 2.83a1 1 0 01-.42 1.42zM7.62 9.86a1 1 0 011.42 0l2.83 2.83a1 1 0 01-1.42 1.42L7.62 11.28a1 1 0 010-1.42z"></path>
+  </symbol>
+</svg>
+
+
+
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'index' %}">
             <img src="{% static 'desserts/img/desserts_logo.png' %}" alt="Sweet Adore Desserts Logo" width="50"
                  height="50"/>
         </a>
+
+
+
+
         <button
                 class="navbar-toggler"
                 type="button"
@@ -154,6 +196,38 @@
                 </li>
                 {% endif %}
             </ul>
+
+
+         <button class="theme-toggle">
+  <span class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</span>
+  <span class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</span>
+  <span class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark</span>
+<svg class="theme-icon-when-auto">
+  <use href="#icon-auto"></use>
+</svg>
+<svg class="theme-icon-when-dark">
+  <use href="#icon-moon"></use>
+</svg>
+<svg class="theme-icon-when-light">
+  <use href="#icon-sun"></use>
+</svg>
+
+
+</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 </nav>
@@ -206,7 +280,12 @@
         crossorigin="anonymous"
 ></script>
 
+    <!-- JavaScript file to switch themes -->
+    <script src="{% static 'desserts/js/theme-toggle.js' %}"></script>
+
+
 {% include 'desserts/cookie_modal.html' %}
 
 </body>
 </html>
+
