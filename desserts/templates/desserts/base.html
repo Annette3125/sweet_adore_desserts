@@ -8,6 +8,10 @@
     <!-- Favicon -->
 
     <link rel="icon" href="{% static 'desserts/img/favicon.ico' %}" type="image/x-icon"/>
+  {% block dark-mode-vars %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/dark_mode.css' %}">
+    {% endblock %}
+
 
     <!-- Bootstrap CSS -->
     <link
