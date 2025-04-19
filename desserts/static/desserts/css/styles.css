@@ -89,7 +89,7 @@ theme.
     display: none;
 }
 
-/* Rodyk tik atitinkamą tekstą */
+/* Show only relevant text*/
 html[data-theme="auto"] .theme-toggle .theme-label-when-auto {
     display: block;
 }
@@ -116,14 +116,14 @@ html[data-theme="auto"] .theme-toggle svg.theme-icon-when-auto {
 
 html[data-theme="dark"] .theme-toggle svg.theme-icon-when-dark {
     display: block;
-    transform: scale(1.2);    /* transform, kad mėnulis būtų didesnis */
+    transform: scale(1.2);    /* transform to make the moon bigger */
 }
 
 html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
     display: block;
 }
 
-/* Pagrindinis body ir html fonas bei tekstas pagal theme */
+/* Main body and html background and text according to theme */
 html[data-theme="dark"],
 html[data-theme="dark"] body {
   background-color: var(--body-bg);
@@ -132,17 +132,17 @@ html[data-theme="dark"] body {
 
 html[data-theme="light"],
 html[data-theme="light"] body {
-  background-color: var(--body-bg, #fff); /* fallback jei nėra kintamojo */
+  background-color: var(--body-bg, #fff); /* fallback if variable does not exist */
   color: var(--body-fg, #000);
 }
 
-/* Jei turi .main-content arba konteinerį su fonu, taip pat jį nudažyk */
+/* If you have a .main-content or container with a background, color it as well */
 html[data-theme="dark"] .main-content {
   background-color: var(--body-bg);
   color: var(--body-fg);
 }
 
-/* Navbar spalvos tamsiame režime */
+/* Navbar colors in dark mode*/
 html[data-theme="dark"] .navbar {
   background-color: var(--primary);
 }
@@ -150,7 +150,7 @@ html[data-theme="dark"] .navbar {
 .theme-toggle {
   padding: 0.3rem;
   border-radius: 50%;
-  /* fono spalva pagal temą */
+  /* background color by theme */
   background: rgba(255,255,255,0.1);
   transition: background 0.3s;
 }
@@ -168,6 +168,6 @@ html[data-theme="light"] .theme-toggle {
     height: 20rem;
     width: 20rem;
     display: none;
-    fill: currentColor; /* naudok dabartinę teksto spalvą */
+    fill: currentColor; /* use current text color */
     transition: transform 0.2s;
 }
